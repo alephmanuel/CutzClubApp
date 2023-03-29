@@ -1,2 +1,3 @@
-# CutzClubApp
-Barber Shop application, using Flutter as the programming language. This application is created as the final project for the CCOM-4401 class Mobile Application Development.
+# CutzClub App
+* Barber Shop application using Flutter as the framework and Dart as the programming language.
+* This application is being developed for the final project of the Mobile App Development course.
