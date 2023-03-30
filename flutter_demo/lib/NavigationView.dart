@@ -98,7 +98,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar>
         actions: [
           // Add space around the icon
           Padding(
-            padding: EdgeInsets.only(right: 15.0), // Add space on ly on right side of icon
+            padding: EdgeInsets.only(right: 15.0), // Add space only on right side of icon
             child: Builder( // Build and icon that opens endDrawer
               builder:(context) => IconButton(
                 onPressed:() => Scaffold.of(context).openEndDrawer(),
