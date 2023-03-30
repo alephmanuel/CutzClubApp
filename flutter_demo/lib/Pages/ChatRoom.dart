@@ -14,7 +14,7 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold
     (
-
+      backgroundColor: Colors.grey[900],
     );
   }
 }
