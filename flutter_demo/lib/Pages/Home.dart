@@ -41,10 +41,10 @@ class _HomePageState extends State<HomePage> {
             child: TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search), // Add icon inside search bar and behind text field
-                hintText: 'Know more about us...',
+                hintText: 'Search barbers, services...',
                 enabledBorder: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(),
-              )
+              ),
             ),
           ),
 
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.horizontal,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(right: 10.0, top: 30.0, bottom: 40.0, left: 20.0),
+                  padding: EdgeInsets.only(right: 3.0, top: 30.0, bottom: 40.0, left: 15.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: 10.0, top: 30.0, bottom: 40.0, left: 20.0),
+                  padding: EdgeInsets.only(right: 10.0, top: 30.0, bottom: 40.0, left: 15.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),

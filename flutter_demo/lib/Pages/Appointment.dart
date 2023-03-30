@@ -14,7 +14,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   Widget build(BuildContext context) {
     return Scaffold
     (
-      
+      backgroundColor: Colors.grey[900],
     );
   }
 }
