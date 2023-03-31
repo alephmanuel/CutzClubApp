@@ -79,9 +79,10 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
           padding: EdgeInsets.only(left: 15.0),
           child: Builder(
             builder: (context) => IconButton(
-                onPressed: () => Scaffold.of(context).openDrawer(),
-                icon: Icon(Icons.menu),
-                color: Colors.amber),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: Icon(Icons.menu),
+              color: Colors.amber
+            ),
           ),
         ),
 
@@ -89,8 +90,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         actions: [
           // Add space around the icon
           Padding(
-              padding: EdgeInsets.only(
-                  right: 15.0), // Add space only on right side of icon
+              padding: EdgeInsets.only(right: 15.0), // Add space only on right side of icon
               child: Builder(
                   // Build and icon that opens endDrawer
                 builder: (context) => IconButton(
@@ -113,6 +113,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         fixedColor: Colors.amber,
 
         // currentIndex is the selector of the element in 'items' array
+        // Elements of the navigation bar.
         currentIndex: navBar_index,
         items: [
           BottomNavigationBarItem(
