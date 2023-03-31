@@ -14,7 +14,7 @@ class _ShopPageState extends State<ShopPage> {
   Widget build(BuildContext context) {
     return Scaffold
     (
-
+      backgroundColor: Colors.grey[900],
     );
   }
 }

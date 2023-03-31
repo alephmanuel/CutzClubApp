@@ -54,7 +54,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       // Highlighted middle button in the navigation bar
-      floatingActionButton: FloatingActionButton(
+      /* floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber,
         child: Icon(Icons.add),
         onPressed: () {
@@ -62,10 +62,12 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         },
       ),
       // Set floating action button over the navigation bar in the middle
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, */
 
       // Left drawer: Menu
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: ListTile()
+      ),
 
       // APP BAR: Bar at the top of the app
       appBar: AppBar(
@@ -91,10 +93,13 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                   right: 15.0), // Add space only on right side of icon
               child: Builder(
                   // Build and icon that opens endDrawer
-                  builder: (context) => IconButton(
-                      onPressed: () => Scaffold.of(context).openEndDrawer(),
-                      icon: Icon(Icons.notifications),
-                      color: Colors.amber)))
+                builder: (context) => IconButton(
+                    onPressed: () => Scaffold.of(context).openEndDrawer(),
+                    icon: Icon(Icons.notifications),
+                    color: Colors.amber
+                )
+              )
+          )
         ],
       ),
       // Right drawer: Notifications
@@ -110,12 +115,22 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         // currentIndex is the selector of the element in 'items' array
         currentIndex: navBar_index,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month), label: 'Appointment'),
+            icon: Icon(Icons.home),
+            label: 'Home'
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag), label: 'Shop'),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Chat')
+            icon: Icon(Icons.calendar_month),
+            label: 'Appointment'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Shop'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message),
+            label: 'Chat'
+          )
         ],
 
         // Calls function that updates the selected index screen
