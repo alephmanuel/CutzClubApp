@@ -64,46 +64,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
       // Set floating action button over the navigation bar in the middle
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, */
 
-      // Left drawer: Menu
-      drawer: Drawer(
-        child: ListTile()
-      ),
-
-      // APP BAR: Bar at the top of the app
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-
-        // Build a drawer with its properties
-        leading: Padding(
-          padding: EdgeInsets.only(left: 15.0),
-          child: Builder(
-            builder: (context) => IconButton(
-              onPressed: () => Scaffold.of(context).openDrawer(),
-              icon: Icon(Icons.menu),
-              color: Colors.amber
-            ),
-          ),
-        ),
-
-        // Buttons after the app bar title
-        actions: [
-          // Add space around the icon
-          Padding(
-              padding: EdgeInsets.only(right: 15.0), // Add space only on right side of icon
-              child: Builder(
-                  // Build and icon that opens endDrawer
-                builder: (context) => IconButton(
-                    onPressed: () => Scaffold.of(context).openEndDrawer(),
-                    icon: Icon(Icons.notifications),
-                    color: Colors.amber
-                )
-              )
-          )
-        ],
-      ),
-      // Right drawer: Notifications
-      endDrawer: Drawer(),
+    
 
       // BODY: Display selected index screen
       body: screens[navBar_index],
@@ -122,7 +83,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
-            label: 'Appointment'
+            label: 'Appointments'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag),

@@ -22,20 +22,48 @@ class _HomePageState extends State<HomePage> {
         children: [
           // Welcome text
           Padding(
-            padding: EdgeInsets.only(right: 80.0),
-            child: Text(
-              "Good Morning, User!",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30
-              ),
-            ),
+            padding: const EdgeInsets.only(top: 60.0),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Container(
+                    // Space around the avatar circle
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      
+                      // Orange circle inside grey container
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: Colors.amber,
+                        child: Text(
+                          "P",
+                        )
+                      ),
+                    ),
+                    padding: EdgeInsets.only(right: 50.0, left: 4.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: Colors.grey[800]
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      
+                    )
+                  )
+                )
+              ],
+            )
           ),
 
           // Make a gap between welcome text and search bar
           SizedBox(height: 30.0),
 
-          // Search bar
+          // Search bar with text field
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: TextField(
