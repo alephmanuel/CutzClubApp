@@ -20,42 +20,56 @@ class _HomePageState extends State<HomePage> {
       body: Column
       (
         children: [
-          // Welcome text
-          Padding(
+          Padding
+          (
             padding: const EdgeInsets.only(top: 60.0),
-            child: Row(
+            child: Row
+            (
               children: [
-                Padding(
+                // INDEX 1
+                Padding
+                (
                   padding: const EdgeInsets.only(left: 15.0),
-                  child: Container(
-                    // Space around the avatar circle
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      
-                      // Orange circle inside grey container
-                      child: CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: Colors.amber,
-                        child: Text(
-                          "P",
+                  child: Container
+                  (
+                    /* Row of elements, where the ist one is the
+                    avatar and the 2nd one is a column with 2 text
+                    widgets. */
+                    child: Row
+                    (
+                      children: [
+                        CircleAvatar
+                        (
+
+                        ),
+                        SizedBox(width: 15.0,),
+                        Container
+                        (
+
                         )
-                      ),
-                    ),
-                    padding: EdgeInsets.only(right: 50.0, left: 4.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      color: Colors.grey[800]
-                    ),
+                      ]
+                    )
                   ),
                 ),
-                Padding(
+
+                // Space in between the elements
+                SizedBox(width: 120.0),
+
+                // INDEX 2
+                Padding
+                (
                   padding: EdgeInsets.only(right: 15.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      
+                  child: Container
+                  (
+                    padding: EdgeInsets.only(right: 30.0),
+                    
+                    decoration: BoxDecoration
+                    (
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(30.0)
                     )
                   )
-                )
+                ),
               ],
             )
           ),
