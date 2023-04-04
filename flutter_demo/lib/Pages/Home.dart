@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_demo/Pages/Appointment.dart';
+import 'package:flutter_demo/Pages/UserProfile.dart';
+import 'package:flutter_demo/Pages/Booking.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,6 +21,49 @@ class _HomePageState extends State<HomePage> {
     return Scaffold
     (
       backgroundColor: Colors.grey[900],
+
+      // Side panel for notifications section
+      endDrawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text("Notifications"),
+              onTap: () {
+                null;
+              },
+            ),
+            ListTile(
+              title: Text("Messages"),
+              onTap: () {
+                null;
+              },
+            ),
+            ListTile(
+              title: Text("Alerts"),
+              onTap: () {
+                null;
+              },
+            )
+          ],
+        )
+      ),
+      
+      // FLOATING ACTION BUTTON
+      floatingActionButton: FloatingActionButton
+      (
+        backgroundColor: Colors.amber,
+        child: Icon(Icons.add_card),
+        onPressed: () {
+          Navigator.push
+          (
+            context,
+            MaterialPageRoute(
+              builder:(context) => BookingAppointment(),
+            )
+          );
+        },
+      ),
+
       body: Column
       (
         children: [
@@ -40,12 +87,28 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         CircleAvatar
                         (
-
+                          backgroundColor: Colors.amber,
+                          child: IconButton(
+                            icon: Icon(Icons.person),
+                            
+                            /* Tapping on the user icon will take you to the
+                            profile page */
+                            onPressed: (){
+                              Navigator.push(
+                                /* Get a context where it pushes a new page to the stack */
+                                context,
+                                // Take me to the profile page
+                                MaterialPageRoute(
+                                  builder:(context) => UserProfile(),
+                                )
+                              );
+                            }
+                          )
                         ),
-                        SizedBox(width: 15.0,),
+                        SizedBox(width: 10.0),
                         Container
                         (
-
+                          child: Text("Welcome back\n<user>")
                         )
                       ]
                     )
@@ -53,23 +116,20 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 // Space in between the elements
-                SizedBox(width: 120.0),
+                SizedBox(width: 160.0),
 
                 // INDEX 2
-                Padding
+                Container
                 (
-                  padding: EdgeInsets.only(right: 15.0),
-                  child: Container
-                  (
-                    padding: EdgeInsets.only(right: 30.0),
-                    
-                    decoration: BoxDecoration
-                    (
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(30.0)
+                  child: Builder(
+                    builder: (context) => IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).openEndDrawer();
+                      },
+                      icon: Icon(Icons.chat_bubble_outline_rounded),
                     )
                   )
-                ),
+                )  
               ],
             )
           ),
@@ -91,32 +151,44 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // Fill in the space left with more content
+          /* Section tiles to navigate */
           Expanded(
             child: ListView
             (
               
-              scrollDirection: Axis.horizontal,
+              scrollDirection: Axis.vertical,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(right: 3.0, top: 30.0, bottom: 40.0, left: 15.0),
+                  padding: EdgeInsets.only(right: 10.0, bottom: 10.0, left: 15.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       color: Colors.grey
                     ),
                     width: 200.0,
-                    height:100.0,
+                    height:150.0,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: 10.0, top: 30.0, bottom: 40.0, left: 15.0),
+                  padding: EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0, left: 15.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       color: Colors.grey
                     ),
                     width: 200.0,
-                    height: 100.0,
+                    height: 150.0,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 10.0, top: 10.0, left: 15.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.grey
+                    ),
+                    width: 200.0,
+                    height: 150.0,
                   ),
                 )
               ]
