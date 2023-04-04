@@ -25,8 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Barber Shop',
       home: MyBottomNavBar(),
-      theme:
-          ThemeData(brightness: Brightness.dark, primarySwatch: Colors.amber),
+      theme: ThemeData(brightness: Brightness.dark, primarySwatch: Colors.amber),
     );
   }
 }
@@ -46,7 +45,6 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     HomePage(),
     AppointmentPage(),
     ShopPage(),
-    ChatRoom()
   ];
 
   @override
@@ -89,10 +87,6 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             icon: Icon(Icons.shopping_bag),
             label: 'Shop'
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Chat'
-          )
         ],
 
         // Calls function that updates the selected index screen
