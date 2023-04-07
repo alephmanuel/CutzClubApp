@@ -17,9 +17,9 @@ class MyBottomNavBar extends StatefulWidget {
 class _MyBottomNavBarState extends State<MyBottomNavBar> {
   int navBar_index = 0;
   final List<Widget> screens = [
-    HomePage(),
-    AppointmentPage(),
-    ShopPage(),
+    const HomePage(),
+    const AppointmentPage(),
+    const ShopPage(),
   ];
 
   @override
