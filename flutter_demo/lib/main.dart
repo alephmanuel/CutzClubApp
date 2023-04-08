@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Barber Shop',
-      home: Login(),
+      home: const Login(),
       theme:
           ThemeData(brightness: Brightness.dark, primarySwatch: Colors.amber),
     );
