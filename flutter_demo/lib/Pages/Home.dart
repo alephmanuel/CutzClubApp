@@ -46,10 +46,11 @@ class _HomePageState extends State<HomePage> {
           ],
         )),
 
-        // FLOATING ACTION BUTTON
-        floatingActionButton: FloatingActionButton(
+        // FLOATING ACTION BUTTON (extended)
+        floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Colors.amber,
-          child: Icon(Icons.add_card),
+          label: Text("Appointment"),
+          icon: Icon(Icons.add),
           onPressed: () {
             Navigator.push(
                 context,
@@ -58,6 +59,7 @@ class _HomePageState extends State<HomePage> {
                 ));
           },
         ),
+        
         body: Column(children: [
           Padding(
               padding: const EdgeInsets.only(top: 60.0),
@@ -124,6 +126,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
+          //TODO:
+          /* Container of active appointment
+          Container of hairstyles
+          Container of services
+          Container of biography */
+
           // Fill in the space left with more content
           /* Section tiles to navigate */
           Expanded(
@@ -133,7 +141,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.grey),
+                    color: Colors.black),
                 width: 200.0,
                 height: 150.0,
               ),
