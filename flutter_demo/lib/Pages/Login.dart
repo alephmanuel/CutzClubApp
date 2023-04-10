@@ -48,7 +48,7 @@ class _LoginState extends State<Login> {
               child: Container(
                   color: Colors.amber,
                   padding: const EdgeInsets.all(0),
-                  child: const Image(image: AssetImage('assets/logo.jpg'))),
+                  child: const Image(image: AssetImage('lib/Images/logo.jpg'))),
             ),
 
             //This container is to create a toggle button to switch between the log in and the register page
