@@ -23,7 +23,9 @@ class Barber extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name),
+              Text(name,
+              style: TextStyle(color: Colors.white),
+              ),
               RatingBar.builder(
                 itemSize: 18,
                 initialRating: 3,
