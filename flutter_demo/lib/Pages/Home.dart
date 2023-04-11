@@ -1,6 +1,5 @@
 /* Database imports: Firebase */
 
-
 /* Essential imports: Material app and framework */
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -88,34 +87,44 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       children: [
                         CircleAvatar(
-                            backgroundColor: Colors.amber,
-                            child: IconButton(
-                                icon: Icon(Icons.person),
+                          backgroundImage:
+                              AssetImage('lib/Images/IMG_2360.png'),
+                          backgroundColor: Colors.amber,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.person,
+                              color: Colors.transparent,
+                            ),
 
-                                /* Tapping on the user icon will take you to the
+                            /* Tapping on the user icon will take you to the
                             profile page */
-                                onPressed: () {
-                                  Navigator.push(
-                                      /* Get a context where it pushes a new page to the stack */
-                                      context,
-                                      // Take me to the profile page
-                                      MaterialPageRoute(
-                                        builder: (context) => UserProfile(),
-                                      ));
-                                })),
+                            onPressed: () {
+                              Navigator.push(
+                                /* Get a context where it pushes a new page to the stack */
+                                context,
+                                // Take me to the profile page
+                                MaterialPageRoute(
+                                  builder: (context) => UserProfile(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                         SizedBox(width: 10.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Welcome!",
+                              "Welcome to CutzClub!",
                               style: TextStyle(
                                 color: Colors.grey[500],
                                 fontSize: 13,
                               ),
                             ),
-                            Text("Gustavo Rassi",
-                                style: TextStyle(fontSize: 16))
+                            Text(
+                              "Gustavo Rassi",
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ],
                         ),
                       ],
@@ -124,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 // Space in between the elements
-                SizedBox(width: 170),
+                SizedBox(width: 120),
 
                 // INDEX 2
                 Container(
@@ -146,7 +155,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(bottom: 20, left: 20, top: 20),
             child: Container(
               child: Text(
-                "Book your next appointment.",
+                "Book your next appointment.💈",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -221,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Gustavo Rassi"),
+                                  Text("John Smith"),
                                   Text(
                                     "Barber",
                                     style: TextStyle(
