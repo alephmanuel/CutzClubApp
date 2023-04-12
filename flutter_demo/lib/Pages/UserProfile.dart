@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import 'package:flutter_demo/Pages/Login.dart';
+
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
 
@@ -51,156 +53,177 @@ class _UserProfileState extends State<UserProfile> {
           //
           //====================
           // PROFILE ITEMS
-          Container(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 40),
-                  child: Row(
-                    children: [
-                      Icon(Icons.person),
-                      SizedBox(width: 70),
-                      Text(
-                        "Gustavo Rassi",
-                        style: TextStyle(
-                          color: Colors.grey[500],
+          Padding(
+            padding: EdgeInsets.only(top: 30),
+            child: Container(
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 40),
+                    child: Row(
+                      children: [
+                        Icon(Icons.person),
+                        SizedBox(width: 70),
+                        Text(
+                          "Gustavo Rassi",
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                //==================
-                // DIVIDER
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Divider(
-                    color: Colors.white,
-                  ),
-                ),
-                // DIVIDER
-                //==================
-                Padding(
-                  padding: EdgeInsets.only(left: 40),
-                  child: Row(
-                    children: [
-                      Icon(Icons.phone_android_rounded),
-                      SizedBox(width: 70),
-                      Text(
-                        "787-218-4328",
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //==================
-                // DIVIDER
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Divider(
-                    color: Colors.white,
-                  ),
-                ),
-                // DIVIDER
-                //==================
-                Padding(
-                  padding: EdgeInsets.only(left: 40),
-                  child: Row(
-                    children: [
-                      Icon(Icons.mail_outline_rounded),
-                      SizedBox(width: 70),
-                      Text(
-                        "gustavo.rassi@upr.edu",
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //==================
-                // DIVIDER
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Divider(
-                    color: Colors.white,
-                  ),
-                ),
-                // DIVIDER
-                //==================
-                Padding(
-                  padding: EdgeInsets.only(left: 40),
-                  child: Row(
-                    children: [
-                      Icon(Icons.remove_red_eye_outlined),
-                      SizedBox(width: 70),
-                      Text(
-                        "••••••••••••",
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //==================
-                // DIVIDER
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Divider(
-                    color: Colors.white,
-                  ),
-                ),
-                // DIVIDER
-                //==================
-                //
-                Padding(
-                  padding: EdgeInsets.only(left: 40),
-                  child: Row(
-                    children: [
-                      Icon(Icons.person_4_outlined),
-                      SizedBox(width: 70),
-                      Text(
-                        "Preferred Barber Name",
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //==================
-                // DIVIDER
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Divider(
-                    color: Colors.white,
-                  ),
-                ),
-                // DIVIDER
-                //==================
-                //
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 70),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber,
+                      ],
                     ),
-                    child: Text("Edit Profile"),
                   ),
-                ),
-              ],
+                  //==================
+                  // DIVIDER
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(
+                      color: Colors.white,
+                    ),
+                  ),
+                  // DIVIDER
+                  //==================
+                  Padding(
+                    padding: EdgeInsets.only(left: 40),
+                    child: Row(
+                      children: [
+                        Icon(Icons.phone_android_rounded),
+                        SizedBox(width: 70),
+                        Text(
+                          "787-218-4328",
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //==================
+                  // DIVIDER
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(
+                      color: Colors.white,
+                    ),
+                  ),
+                  // DIVIDER
+                  //==================
+                  Padding(
+                    padding: EdgeInsets.only(left: 40),
+                    child: Row(
+                      children: [
+                        Icon(Icons.mail_outline_rounded),
+                        SizedBox(width: 70),
+                        Text(
+                          "gustavo.rassi@upr.edu",
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //==================
+                  // DIVIDER
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(
+                      color: Colors.white,
+                    ),
+                  ),
+                  // DIVIDER
+                  //==================
+                  Padding(
+                    padding: EdgeInsets.only(left: 40),
+                    child: Row(
+                      children: [
+                        Icon(Icons.remove_red_eye_outlined),
+                        SizedBox(width: 70),
+                        Text(
+                          "••••••••••••",
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //==================
+                  // DIVIDER
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(
+                      color: Colors.white,
+                    ),
+                  ),
+                  // DIVIDER
+                  //==================
+                  //
+                  Padding(
+                    padding: EdgeInsets.only(left: 40),
+                    child: Row(
+                      children: [
+                        Icon(Icons.person_4_outlined),
+                        SizedBox(width: 70),
+                        Text(
+                          "Preferred Barber Name",
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //==================
+                  // DIVIDER
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(
+                      color: Colors.white,
+                    ),
+                  ),
+                  // DIVIDER
+                  //==================
+                  //
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 70),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amber,
+                      ),
+                      child: Text("Edit Profile"),
+                    ),
+                  ),
+
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Log Out",
+                      style: TextStyle(
+                        color: Colors.red[700],
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              //=================
+              // CONTAINER PROPERTIES
+              height: 450,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+              ),
+              //=================
             ),
-            //=================
-            // CONTAINER PROPERTIES
-            height: 400,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-            ),
-            //=================
           ),
         ],
       ),
