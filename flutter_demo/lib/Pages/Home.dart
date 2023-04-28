@@ -142,7 +142,9 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Scaffold.of(context).openEndDrawer();
                       },
-                      icon: Icon(Icons.chat_bubble_outline_rounded),
+                      icon: Icon(Icons.notifications,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),
@@ -238,6 +240,13 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ],
                               ),
+                              SizedBox(width: 110),
+                              TextButton(
+                                onPressed:() {
+                                  
+                                },
+                                child: Text("View details"),
+                              )
                             ],
                           ),
                         ),

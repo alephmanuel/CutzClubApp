@@ -22,6 +22,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
   String hour_selected = "";
   String minutes_selected = "";
 
+  /* Function to update the day for every time there's an input by the user. */
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       date_selected = day;
@@ -33,15 +34,6 @@ class _BookingAppointmentState extends State<BookingAppointment> {
     int hour = date_selected.hour;
     int minutes = date_selected.minute;
     return Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.grey.shade900,
-        //   title: const Text('Appointment Page',),
-        //   titleTextStyle: TextStyle(
-        //     fontWeight: FontWeight.bold,
-        //     fontSize: 22,
-        //     color: Colors.white,
-        //   ),
-        // ),
         backgroundColor: Colors.grey[900],
         body: SingleChildScrollView(
           child: Column(children: [
@@ -55,10 +47,11 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                   },
                 ),
               ),
+              /* Title of the page: Book your appointment. */
               Container(
                 padding: EdgeInsets.fromLTRB(12, 55, 50, 4),
                 child: Text(
-                  'Make your appointment:',
+                  'Book your appointment',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.2,
@@ -69,63 +62,76 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                 ),
               ),
             ]),
+
+            // DIVIDER--------------------
+            /* Divider between the title and the calendar. */
             Divider(
               color: Colors.amber,
               thickness: 2.5,
             ),
+            // END OF DIVIDER-------------
             Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Container(
-                  child: TableCalendar(
-                    locale: "en_US",
-                    rowHeight: 50,
-                    daysOfWeekHeight: 45,
-                    headerStyle: const HeaderStyle(
-                      titleCentered: true,
-                      formatButtonVisible: true,
-                      formatButtonShowsNext: true,
-                    ),
-                    availableGestures: AvailableGestures.all,
-                    availableCalendarFormats: const {
-                      CalendarFormat.month: 'Month',
-                      CalendarFormat.twoWeeks: '2 weeks',
-                      CalendarFormat.week: 'Week',
-                    },
-                    focusedDay: DateTime.now(),
-                    selectedDayPredicate: (day) =>
-                        isSameDay(day, date_selected),
-                    firstDay: DateTime.utc(2022, 1, 1),
-                    lastDay: DateTime.utc(2052, 12, 31),
-                    onDaySelected: _onDaySelected,
-                    startingDayOfWeek: StartingDayOfWeek.sunday,
-                    daysOfWeekVisible: true,
-                    calendarFormat: format,
-                    onFormatChanged: (format) {
-                      setState(() {
-                        this.format = format;
-                      });
-                    },
-                    calendarStyle: CalendarStyle(
-                      isTodayHighlighted: true,
-                      selectedDecoration: BoxDecoration(
-                          color: Colors.amber,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              style: BorderStyle.solid,
-                              width: 2,
-                              color: Colors.black54)),
-                      todayDecoration: BoxDecoration(
-                        color: Colors.grey.shade700,
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Container(
+                /* Table calendar and its properties. */
+                child: TableCalendar(
+                  locale: "en_US", // Timezone
+                  rowHeight:
+                      50, // Basically, the space in between the row of the days.
+                  daysOfWeekHeight: 45, // Space between
+                  headerStyle: const HeaderStyle(
+                    titleCentered:
+                        true, // Alignment of the month to the center.
+                    formatButtonVisible:
+                        true, // Display the button to toggle view: biweekly, monthly, weekly.
+                    formatButtonShowsNext: true, // Shows next viewing option.
+                  ),
+
+                  /* Viewing formats (by month, weekly or biweekly) */
+                  availableGestures: AvailableGestures.all,
+                  availableCalendarFormats: const {
+                    CalendarFormat.month: 'Month',
+                    CalendarFormat.twoWeeks: '2 weeks',
+                    CalendarFormat.week: 'Week',
+                  },
+                  focusedDay: DateTime.now(),
+                  selectedDayPredicate: (day) => isSameDay(day, date_selected),
+
+                  /* Sets the range of the dates in the calendar. */
+                  firstDay: DateTime.utc(2022, 1, 1),
+                  lastDay: DateTime.utc(2052, 12, 31),
+                  //==================
+                  onDaySelected: _onDaySelected,
+                  startingDayOfWeek: StartingDayOfWeek.sunday,
+                  daysOfWeekVisible: true,
+                  calendarFormat: format,
+                  onFormatChanged: (format) {
+                    setState(() {
+                      this.format = format;
+                    });
+                  },
+                  calendarStyle: CalendarStyle(
+                    isTodayHighlighted: true,
+                    selectedDecoration: BoxDecoration(
+                        color: Colors.amber,
                         shape: BoxShape.circle,
                         border: Border.all(
                             style: BorderStyle.solid,
-                            width: 1.5,
-                            color: Colors.white24),
-                      ),
-                      selectedTextStyle: TextStyle(color: Colors.white),
+                            width: 2,
+                            color: Colors.black54)),
+                    todayDecoration: BoxDecoration(
+                      color: Colors.grey.shade700,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                          style: BorderStyle.solid,
+                          width: 1.5,
+                          color: Colors.white24),
                     ),
+                    selectedTextStyle: TextStyle(color: Colors.white),
                   ),
-                )),
+                ),
+              ),
+            ),
             SizedBox(height: 15),
             Divider(
               color: Colors.amber,
@@ -158,7 +164,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            //fontStyle: FontStyle.italic,
                           ),
                         ),
                       ),
@@ -174,10 +180,28 @@ class _BookingAppointmentState extends State<BookingAppointment> {
             ),
             SizedBox(height: 10),
             Container(
-              height: 130.0,
+              height: 200.0,
               child: ListView(
                 scrollDirection: Axis.vertical,
                 children: [
+                  Container(
+                    child: Row(
+                      children: 
+                      [
+                        Barber(name: "John Smith"),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: VerticalDivider(color: Colors.white),
+                        ),
+                        ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Container(child:Text("HELLOOOO"))
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: () => setState(
                       () {
@@ -186,7 +210,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                     ),
                     child: Barber(name: "John Smith"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade900,
+                      backgroundColor: Colors.grey,
                     ),
                   ),
                   ElevatedButton(
@@ -259,12 +283,4 @@ class _BookingAppointmentState extends State<BookingAppointment> {
           ]),
         ));
   }
-
-  // Widget create_calendar(){
-  //   return Column(
-  //     children: [
-
-  //     ],
-  //   );
-  // }
 }
