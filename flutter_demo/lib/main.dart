@@ -4,6 +4,7 @@ import 'package:flutter_demo/NavigationView.dart';
 import 'package:flutter_demo/Pages/Login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_demo/firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //import 'package:sqflite/sqflite.dart';
 
@@ -26,11 +27,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     dynamic fbDB = FirebaseFirestore.instance;
-    final Stream<QuerySnapshot> _studentStream = FirebaseFirestore.instance.collection("accounts").snapshots();
-    fbDB.collection("accounts").get().then((event) => {
-      for(var doc in event.docs)
-        print("${doc.id} => ${doc.data()}")
-    });
+    final Stream<QuerySnapshot> _studentStream =
+        FirebaseFirestore.instance.collection("accounts").snapshots();
+    fbDB.collection("accounts").get().then((event) =>
+        {for (var doc in event.docs) print("${doc.id} => ${doc.data()}")});
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Barber Shop',
