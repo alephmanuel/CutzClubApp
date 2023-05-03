@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      // FLOATING ACTION BUTTON (extended)
+      /* FLOATING ACTION BUTTON (extended) */
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
         label: Text("Book Appointment"),
@@ -81,11 +81,12 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0),
                   child: Container(
-                    /* Row of elements, where the ist one is the
+                    /* Row of elements, where the 1st one is the
                     avatar and the 2nd one is a column with 2 text
                     widgets. */
                     child: Row(
                       children: [
+                        /* ⁡⁣⁢⁡⁢⁣⁣User account widget.⁡⁡ */
                         CircleAvatar(
                           backgroundImage:
                               AssetImage('lib/Images/IMG_2360.png'),
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                               Icons.person,
                               color: Colors.transparent,
                             ),
-
+                            /* ⁡⁢⁣⁣User icon⁡ */
                             /* Tapping on the user icon will take you to the
                             profile page */
                             onPressed: () {
@@ -110,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                         ),
+                        /* ⁡⁣⁢⁡⁣⁢⁡⁢⁣⁣Welcome message and user name⁡⁡ display one on top of the other. */
                         SizedBox(width: 10.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,6 +138,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(width: 120),
 
                 // INDEX 2
+                /* Right side panel/drawer⁡: ⁡⁢⁣⁣Notifications⁡ */
                 Container(
                   child: Builder(
                     builder: (context) => IconButton(
@@ -167,7 +170,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // SEARCHBAR with text field
+          // ⁡⁢⁣⁣SEARCH BAR⁡ with text field
           Padding(
             padding: const EdgeInsets.only(left: 25, right: 25, bottom: 5),
             child: TextField(
@@ -185,19 +188,13 @@ class _HomePageState extends State<HomePage> {
             child: Divider(color: Colors.white),
           ),
 
-          //TODO:
-          /* Container of active appointment
-          Container of hairstyles
-          Container of services
-          Container of biography */
-
-          // Fill in the space left with more content
+          // Fill in the space left with more content.
           /* Section tiles to navigate */
           Expanded(
             child: ListView(
               scrollDirection: Axis.vertical,
               children: [
-                /* First section/index: APPOINTMENT */
+                /* First section/index: ⁡⁢⁣⁣UPCOMING APPOINTMENT⁡ */
                 Padding(
                   padding: const EdgeInsets.only(left: 20, bottom: 20),
                   child: Container(
@@ -221,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                         Padding(
                           padding: EdgeInsets.only(left: 10, top: 10),
 
-                          // User icon and user name inside appointment tile
+                          /* User icon and name inside with ⁡⁢⁣⁣upcoming appointment information⁡. */
                           child: Row(
                             children: [
                               CircleAvatar(
@@ -286,9 +283,10 @@ class _HomePageState extends State<HomePage> {
                     height: 150,
                   ),
                 ),
+                /* ⁡⁢⁣⁣Upcoming Appointment Information widget ends here.⁡ */
                 // End of index 1
                 /* ================================================= */
-                // Begin of index 2: BARBERS
+                // Begin of index 2: ⁡⁢⁣⁣TOP SERVICES⁡
                 Padding(
                   padding: EdgeInsets.only(left: 20, bottom: 10.0, top: 40.0),
                   child: Row(
@@ -314,82 +312,30 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                     ),
-                    height: 200,
+                    height: 170,
+                    /* ⁡⁢⁣⁣ServiceTile()⁡ is a reusable function that has the structure of the widget
+                    that displays the hairstyles with their prices and names. This implementation
+                    helps the developer understand the code, making it easier to read. */
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10)),
-                            width: 120,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'lib/Images/6-mens-taper-cut.png',
-                                  width: 80,
-                                  height: 100,
-                                ),
-                              ],
-                            ),
-                          ),
+                        ServiceTile(
+                          haircut_image: 'lib/Images/6-mens-taper-cut.png',
+                          haircutname: "Crew Cut",
+                          price: 25
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10)),
-                            width: 120,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'lib/Images/6-mens-taper-cut.png',
-                                  width: 80,
-                                  height: 100,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10)),
-                            width: 120,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'lib/Images/6-mens-taper-cut.png',
-                                  width: 80,
-                                  height: 100,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20, left: 20),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10)),
-                            width: 120,
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'lib/Images/6-mens-taper-cut.png',
-                                  width: 80,
-                                  height: 100,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        ServiceTile(
+                            haircut_image: 'lib/Images/6-mens-taper-cut.png',
+                            haircutname: "Crew Cut",
+                            price: 25),
+                        ServiceTile(
+                            haircut_image: 'lib/Images/6-mens-taper-cut.png',
+                            haircutname: "Crew Cut",
+                            price: 25),
+                        ServiceTile(
+                            haircut_image: 'lib/Images/6-mens-taper-cut.png',
+                            haircutname: "Crew Cut",
+                            price: 25),
                       ],
                     ),
                   ),
