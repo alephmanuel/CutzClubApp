@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_demo/Pages/Appointment.dart';
 import 'package:flutter_demo/Pages/UserProfile.dart';
 import 'package:flutter_demo/Pages/Booking.dart';
+import 'package:flutter_demo/Utility/BarberCard.dart';
 
 /* Utility file */
 import 'package:flutter_demo/Utility/Barbers.dart';
@@ -17,7 +18,7 @@ import 'package:flutter_demo/Utility/ServiceTile.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 /* ============================================== */
-/* HOME PAGE */
+/* ⁡⁢⁣⁣HOME PAGE⁡ */
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -155,7 +156,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // Make a gap between welcome text and search bar
+          /* ⁡⁢⁣⁣Gap between⁡ welcome text and search bar. */
           Padding(
             padding: const EdgeInsets.only(bottom: 20, left: 20, top: 20),
             child: Container(
@@ -177,7 +178,7 @@ class _HomePageState extends State<HomePage> {
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons
                     .search), // Add icon inside search bar and behind text field
-                hintText: 'Search barbers, services...',
+                hintText: 'Search barbers, hairstyles...',
                 enabledBorder: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(),
               ),
@@ -189,7 +190,7 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // Fill in the space left with more content.
-          /* Section tiles to navigate */
+          /* ⁡⁢⁣⁣List of the sections⁡ below. */
           Expanded(
             child: ListView(
               scrollDirection: Axis.vertical,
@@ -286,19 +287,19 @@ class _HomePageState extends State<HomePage> {
                 /* ⁡⁢⁣⁣Upcoming Appointment Information widget ends here.⁡ */
                 // End of index 1
                 /* ================================================= */
-                // Begin of index 2: ⁡⁢⁣⁣TOP SERVICES⁡
+                // Begin of index 2: ⁡⁢⁣⁣TRENDING HAIRSTYLES⁡⁡
                 Padding(
-                  padding: EdgeInsets.only(left: 20, bottom: 10.0, top: 40.0),
+                  padding: EdgeInsets.only(left: 20, bottom: 10.0, top: 40.0, right: 10),
                   child: Row(
                     children: [
                       Text(
-                        "Top Services",
+                        "Trending Hairstyles",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(width: 195),
+                      SizedBox(width: 135),
                       TextButton(
                         onPressed: () {},
                         child: Text("See All"),
@@ -306,13 +307,14 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
+                /* ⁡⁢⁣⁣List of ⁡⁢⁣⁣hairstyles⁡ provided by the barbershop. */
                 Padding(
                   padding: EdgeInsets.only(bottom: 10),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                     ),
-                    height: 170,
+                    height: 210,
                     /* ⁡⁢⁣⁣ServiceTile()⁡ is a reusable function that has the structure of the widget
                     that displays the hairstyles with their prices and names. This implementation
                     helps the developer understand the code, making it easier to read. */
@@ -321,21 +323,28 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         ServiceTile(
                           haircut_image: 'lib/Images/6-mens-taper-cut.png',
-                          haircutname: "Crew Cut",
-                          price: 25
+                          haircut_name: "Crew Cut",
+                          price: 23,
+                          haircut_description: "Hair is slightly longer on top and shorter on the sides.",
                         ),
                         ServiceTile(
-                            haircut_image: 'lib/Images/6-mens-taper-cut.png',
-                            haircutname: "Crew Cut",
-                            price: 25),
+                            haircut_image: 'lib/Images/Undercut.png',
+                            haircut_name: "Undercut",
+                            price: 25,
+                            haircut_description: "Hair on the sides and back is trimmed very short. Hair on top longer and styled.",
+                        ),
                         ServiceTile(
-                            haircut_image: 'lib/Images/6-mens-taper-cut.png',
-                            haircutname: "Crew Cut",
-                            price: 25),
+                            haircut_image: 'lib/Images/FrenchCrop.png',
+                            haircut_name: "French Crop",
+                            price: 20,
+                            haircut_description: "Modern version of the crew cut. Hair on top is cut in a slightly longer and textured style.",
+                        ),
                         ServiceTile(
-                            haircut_image: 'lib/Images/6-mens-taper-cut.png',
-                            haircutname: "Crew Cut",
-                            price: 25),
+                            haircut_image: 'lib/Images/Pompadour.png',
+                            haircut_name: "Pompadour Cut",
+                            price: 25,
+                            haircut_description: "Retro hairstyle. Top hair swept upwards and back. Sides and back trimmed shorter.",
+                        ),
                       ],
                     ),
                   ),
@@ -362,32 +371,27 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 20.0, right: 20, bottom: 70),
+                  padding: EdgeInsets.only(bottom: 70),
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.black),
-                    height: 200,
+                        color: Colors.transparent),
+                    height: 190,
                     child: ListView(
-                      scrollDirection: Axis.vertical,
+                      scrollDirection: Axis.horizontal,
                       children: [
-                        Barber(name: "John Smith"),
-
-                        // DIVIDER
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(color: Colors.white),
+                        // ⁡⁢⁣⁣List of barbers.⁡
+                        BarberCard(
+                          barber_name: "John Smith",
+                          barber_image: 'lib/Images/JohnSmith.png',
                         ),
-
-                        Barber(name: "Aleph Gonzalez"),
-
-                        // DIVIDER
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(color: Colors.white),
+                        BarberCard(
+                          barber_name: "Gustavo Rassi",
+                          barber_image: 'lib/Images/IMG_2360.png',
                         ),
-
-                        Barber(name: "Gustavo Rassi"),
+                        BarberCard(
+                          barber_name: "Aleph Gonzalez",
+                          barber_image: 'lib/Images/AlephGonzalez.png',
+                        )
                       ],
                     ),
                   ),

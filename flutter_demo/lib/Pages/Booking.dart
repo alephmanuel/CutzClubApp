@@ -194,7 +194,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   //======================
-                  /* BARBER: John Smith⁡⁡⁡ */
+                  /* ⁡⁢⁣⁣BARBER: John Smith⁡⁡⁡⁡ */
                   Container
                   (
                     
@@ -208,7 +208,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                   Divider(color: Colors.white),
                   /* DIVIDER */
                   //=========================
-                  /* BARBER: Gustavo Rassi */
+                  /* ⁡⁢⁣⁣BARBER: Gustavo Rassi⁡ */
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     /////////////
@@ -240,7 +240,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                             child: VerticalDivider(color: Colors.white),
                           ),
                           ///////////
-                          /* ⁡⁣⁣Row of the available hours.⁡ */
+                          /* ⁡⁣⁡⁢⁣⁣Row of the available hours.⁡⁡ */
                           Padding(
                             padding: EdgeInsets.all(5),
                             child: Container(
@@ -275,7 +275,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                                   //////////////////
                                   /* Hour button. */
                                   GestureDetector(
-                                    /* '⁡⁣⁢⁣onTap⁡' will change the color depending on enabled/disabled. */
+                                    /* '⁡⁣⁢onTap⁡' will change the color depending on enabled/disabled. */
                                     onTap: () {
                                       setState(() {
                                         isEnabled = !isEnabled;
@@ -396,7 +396,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                   Divider(color: Colors.white),
                   /* DIVIDER */
                   //==========================
-                  /* BARBER: Aleph Gonzalez */
+                  /* ⁡⁢⁣⁣BARBER: Aleph Gonzalez⁡ */
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     /////////////
