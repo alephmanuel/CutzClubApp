@@ -5,8 +5,29 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter_demo/Pages/Login.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_demo/auth.dart';
+
 class UserProfile extends StatefulWidget {
-  const UserProfile({super.key});
+  UserProfile({super.key});
+
+  final User? user = Auth().currentUser;
+  Future<void> signOut() async {
+    await Auth().signOut(); 
+  }
+
+  Widget signOutButton() {
+    return TextButton(
+      onPressed: signOut,
+      child: Text(
+        "Sign Out",
+        style: TextStyle(
+          color: Colors.red[700],
+          decoration: TextDecoration.underline,
+        ),
+      ),
+    );
+  }
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -44,7 +65,7 @@ class _UserProfileState extends State<UserProfile> {
           SizedBox(height: 35),
           //
           //===================
-          // USER ICON
+          // ⁡⁢⁣⁣USER ICON/PROFILE IMAGE⁡
           CircleAvatar(
             backgroundImage: AssetImage('lib/Images/IMG_2360.png'),
             backgroundColor: Colors.amber,
@@ -52,7 +73,7 @@ class _UserProfileState extends State<UserProfile> {
           ),
           //
           //====================
-          // PROFILE ITEMS
+          // ⁡⁢⁣⁣LIST: PROFILE ITEMS⁡
           Padding(
             padding: EdgeInsets.only(top: 30),
             child: Container(
@@ -73,16 +94,16 @@ class _UserProfileState extends State<UserProfile> {
                       ],
                     ),
                   ),
-                  //==================
-                  // DIVIDER
+                  //⁡⁢⁣⁣==================⁡
+                  // ⁡⁢⁣⁣DIVIDER⁡
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Divider(
                       color: Colors.white,
                     ),
                   ),
-                  // DIVIDER
-                  //==================
+                  // ⁡⁢⁣⁣DIVIDER⁡
+                  //⁡⁢⁣⁣==================⁡
                   Padding(
                     padding: EdgeInsets.only(left: 40),
                     child: Row(
@@ -196,35 +217,18 @@ class _UserProfileState extends State<UserProfile> {
                       child: Text("Edit Profile"),
                     ),
                   ),
-
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Login(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "Log Out",
-                      style: TextStyle(
-                        color: Colors.red[700],
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
                 ],
               ),
               //=================
               // CONTAINER PROPERTIES
-              height: 450,
+              height: 400,
               decoration: BoxDecoration(
                 color: Colors.transparent,
               ),
               //=================
             ),
           ),
+          widget.signOutButton(),
         ],
       ),
     );

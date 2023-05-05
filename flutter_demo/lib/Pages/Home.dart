@@ -398,7 +398,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 // End of index 2
                 /* ========================================== */
-                // Begin of index 3: SERVICES/HAIRSTYLES
               ],
             ),
           ),

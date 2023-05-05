@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/NavigationView.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../auth.dart';
 
 //Creation of the Login page
 class Login extends StatefulWidget {
@@ -10,14 +13,50 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  /* ⁡⁢⁣⁣Variables⁡ */
+  String? errorMessage = '';
+  bool isLogin = true;
+
+  /* These ⁡⁢⁣⁣variables⁡ will be used ⁡⁢⁣⁣for the user⁡ to type their ⁡⁢⁣⁣information⁡
+  based on the requirements (⁡⁢⁣⁣email & password⁡) */
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  /* ⁡⁢⁣⁣Sing in user with exception for safety.⁡ */
+  Future<void> signInWithEmailAndPassword() async {
+    try{
+      await Auth().signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
+  /* ⁡⁢⁣⁣Create user⁡ with exception for safety. */
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text
+      );
+    } on FirebaseAuthException catch (e) {
+      errorMessage = e.message;
+    }
+  }
+
+  /* ⁡⁢⁣⁣Check if⁡ there's an ⁡⁢⁣⁣error⁡, so print a ⁡⁢⁣⁣message⁡. */
+  Widget _errorMessage() {
+    return Text(errorMessage == '' ? '' : 'Hmmm? $errorMessage');
+  }
+
   //List for the toggle button to switch between Log In and Register
   final List<bool> sign_selections = [true, false];
 
   //All the controllers for the user/barber information
-  // ignore: non_constant_identifier_names
-  TextEditingController l_emailController = TextEditingController();
-  // ignore: non_constant_identifier_names
-  TextEditingController l_passwordController = TextEditingController();
   // ignore: non_constant_identifier_names
   TextEditingController r_fnameController = TextEditingController();
   // ignore: non_constant_identifier_names
@@ -31,7 +70,7 @@ class _LoginState extends State<Login> {
   // ignore: non_constant_identifier_names
   TextEditingController r_phoneController = TextEditingController();
 
-//Start the login page visual
+/* Start of the ⁡⁢⁣⁣LOGIN PAGE structure⁡. */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,11 +153,11 @@ class _LoginState extends State<Login> {
   Widget _log() {
     return Column(
       children: [
-        //container for the email text field on the log in page
+        /* ⁡⁢⁣⁣EMAIL⁡ textfield. */
         Container(
           padding: const EdgeInsets.fromLTRB(10.0, 18.0, 10.0, 10.0),
           child: TextField(
-            controller: l_emailController,
+            controller: _emailController,
             decoration: InputDecoration(
               hintText: 'Email',
               hintStyle: TextStyle(
@@ -142,11 +181,11 @@ class _LoginState extends State<Login> {
           ),
         ),
 
-        //container for the password text field on the log in page
+        /* ⁡⁢⁣⁣PASSWORD⁡ textfield. */
         Container(
           padding: const EdgeInsets.all(10),
           child: TextField(
-            controller: l_passwordController,
+            controller: _passwordController,
             obscureText: true,
             decoration: InputDecoration(
               hintText: 'Password',
@@ -174,12 +213,12 @@ class _LoginState extends State<Login> {
         //button to submit the information for the log in
         ElevatedButton.icon(
           onPressed: () {
-            // Perform login here
-            String email = l_emailController.text;
-            String password = l_passwordController.text;
+            /* ⁡⁢⁣⁣Perform login here⁡ */
+            String email = _emailController.text;
+            String password = _passwordController.text;
 
-            l_emailController.clear();
-            l_passwordController.clear();
+            _emailController.clear();
+            _passwordController.clear();
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => MyBottomNavBar()));
           },
@@ -316,7 +355,7 @@ class _LoginState extends State<Login> {
           ),
         ),
 
-        // container for the password on the registration page
+        // Container: ⁡⁢⁣⁣Password on the registration page⁡
         Container(
           padding: EdgeInsets.all(10),
           child: TextField(
@@ -345,7 +384,7 @@ class _LoginState extends State<Login> {
           ),
         ),
 
-        // container for the confirm password on the registration page
+        // Container: ⁡⁢⁣⁣Confirm password on the registration page⁡
         Container(
           padding: EdgeInsets.all(10),
           child: TextField(
@@ -378,9 +417,9 @@ class _LoginState extends State<Login> {
         ElevatedButton.icon(
           onPressed: () {
             // Perform registration here
-            String email = r_emailController.text;
+            String email = _emailController.text;
             String phone = r_phoneController.text;
-            String password = r_passwordController.text;
+            String password = _passwordController.text;
             String confirmpassword = r_confirmpasswordController.text;
             r_fnameController.clear();
             r_lnameController.clear();
