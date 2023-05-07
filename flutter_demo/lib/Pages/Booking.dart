@@ -195,12 +195,8 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                 children: [
                   //======================
                   /* ⁡⁢⁣⁣BARBER: John Smith⁡⁡⁡⁡ */
-                  Container
-                  (
-                    
-                    decoration: BoxDecoration(
-                      color: Colors.black
-                    ),
+                  Container(
+                    decoration: BoxDecoration(color: Colors.black),
                     height: 80,
                   ),
                   //===========

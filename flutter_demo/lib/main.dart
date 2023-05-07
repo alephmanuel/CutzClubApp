@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     dynamic fbDB = FirebaseFirestore.instance;
     final Stream<QuerySnapshot> _studentStream =
-        FirebaseFirestore.instance.collection("accounts").snapshots();
-    fbDB.collection("accounts").get().then((event) =>
+        FirebaseFirestore.instance.collection("user").snapshots();
+    fbDB.collection("user").get().then((event) =>
         {for (var doc in event.docs) print("${doc.id} => ${doc.data()}")});
     return MaterialApp(
       debugShowCheckedModeBanner: false,
