@@ -12,13 +12,12 @@ class UserProfile extends StatefulWidget {
   UserProfile({super.key});
 
   final User? user = Auth().currentUser;
-  Future<void> signOut() async {
-    await Auth().signOut();
-  }
 
   Widget signOutButton() {
     return TextButton(
-      onPressed: signOut,
+      onPressed: () {
+        FirebaseAuth.instance.signOut();
+      },
       child: Text(
         "Sign Out",
         style: TextStyle(

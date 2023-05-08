@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/NavigationView.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter_demo/main.dart';
 import '../auth.dart';
 
 //Creation of the Login page
@@ -19,34 +19,8 @@ class _LoginState extends State<Login> {
 
   /* These ⁡⁢⁣⁣variables⁡ will be used ⁡⁢⁣⁣for the user⁡ to type their ⁡⁢⁣⁣information⁡
   based on the requirements (⁡⁢⁣⁣email & password⁡) */
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  /* ⁡⁢⁣⁣Sing in user with exception for safety.⁡ */
-  Future<void> signInWithEmailAndPassword() async {
-    try{
-      await Auth().signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text
-      );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
-  }
-
-  /* ⁡⁢⁣⁣Create user⁡ with exception for safety. */
-  Future<void> createUserWithEmailAndPassword() async {
-    try {
-      await Auth().createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text
-      );
-    } on FirebaseAuthException catch (e) {
-      errorMessage = e.message;
-    }
-  }
+  final TextEditingController l_emailController = TextEditingController();
+  final TextEditingController l_passwordController = TextEditingController();
 
   /* ⁡⁢⁣⁣Check if⁡ there's an ⁡⁢⁣⁣error⁡, so print a ⁡⁢⁣⁣message⁡. */
   Widget _errorMessage() {
@@ -149,6 +123,35 @@ class _LoginState extends State<Login> {
     );
   }
 
+  /* ⁡⁢⁣⁣Sing in user with exception for safety.⁡ */
+  Future logIn() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: l_emailController.text.trim(),
+          password: l_passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
+  /* ⁡⁢⁣⁣Create user⁡ with exception for safety. */
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+          email: r_emailController.text, password: r_passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      errorMessage = e.message;
+    }
+  }
+
   //Creation of the widget for the log in
   Widget _log() {
     return Column(
@@ -157,7 +160,7 @@ class _LoginState extends State<Login> {
         Container(
           padding: const EdgeInsets.fromLTRB(10.0, 18.0, 10.0, 10.0),
           child: TextField(
-            controller: _emailController,
+            controller: l_emailController,
             decoration: InputDecoration(
               hintText: 'Email',
               hintStyle: TextStyle(
@@ -185,7 +188,7 @@ class _LoginState extends State<Login> {
         Container(
           padding: const EdgeInsets.all(10),
           child: TextField(
-            controller: _passwordController,
+            controller: l_passwordController,
             obscureText: true,
             decoration: InputDecoration(
               hintText: 'Password',
@@ -214,13 +217,7 @@ class _LoginState extends State<Login> {
         ElevatedButton.icon(
           onPressed: () {
             /* ⁡⁢⁣⁣Perform login here⁡ */
-            String email = _emailController.text;
-            String password = _passwordController.text;
-
-            _emailController.clear();
-            _passwordController.clear();
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MyBottomNavBar()));
+            logIn();
           },
           icon: const Icon(Icons.login),
           label: const Text('Log In'),
@@ -417,9 +414,9 @@ class _LoginState extends State<Login> {
         ElevatedButton.icon(
           onPressed: () {
             // Perform registration here
-            String email = _emailController.text;
+            String email = r_emailController.text;
             String phone = r_phoneController.text;
-            String password = _passwordController.text;
+            String password = r_passwordController.text;
             String confirmpassword = r_confirmpasswordController.text;
             r_fnameController.clear();
             r_lnameController.clear();
@@ -427,9 +424,6 @@ class _LoginState extends State<Login> {
             r_phoneController.clear();
             r_passwordController.clear();
             r_confirmpasswordController.clear();
-
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MyBottomNavBar()));
           },
           icon: const Icon(Icons.app_registration),
           label: const Text('Register'),

@@ -16,6 +16,8 @@ void main() async {
   runApp(const MyApp());
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -26,17 +28,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dynamic fbDB = FirebaseFirestore.instance;
-    final Stream<QuerySnapshot> _studentStream =
-        FirebaseFirestore.instance.collection("user").snapshots();
-    fbDB.collection("user").get().then((event) =>
-        {for (var doc in event.docs) print("${doc.id} => ${doc.data()}")});
+    // dynamic fbDB = FirebaseFirestore.instance;
+    // final Stream<QuerySnapshot> _studentStream =
+    //     FirebaseFirestore.instance.collection("accounts").snapshots();
+    // fbDB.collection("accounts").get().then((event) =>
+    //     {for (var doc in event.docs) print("${doc.id} => ${doc.data()}")});
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Barber Shop',
-      home: Login(),
+      home: start(),
       theme:
           ThemeData(brightness: Brightness.dark, primarySwatch: Colors.amber),
     );
   }
+}
+
+class start extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Something went Wrong!'));
+            } else if (snapshot.hasData) {
+              return MyBottomNavBar();
+            } else {
+              return Login();
+            }
+          },
+        ),
+      );
 }
