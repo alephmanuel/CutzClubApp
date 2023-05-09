@@ -1,5 +1,6 @@
 /* Database imports: Firebase */
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 /* Essential imports: Material app and framework */
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -27,6 +28,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final Stream<QuerySnapshot> barbers = FirebaseFirestore.instance.collection('barber').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,84 +78,86 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 60.0),
-            child: Row(
-              children: [
-                // INDEX 1
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Container(
-                    /* Row of elements, where the 1st one is the
-                    avatar and the 2nd one is a column with 2 text
-                    widgets. */
-                    child: Row(
-                      children: [
-                        /* ⁡⁣⁢⁡⁢⁣⁣User account widget.⁡⁡ */
-                        CircleAvatar(
-                          backgroundImage:
-                              AssetImage('lib/Images/IMG_2360.png'),
-                          backgroundColor: Colors.amber,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.person,
-                              color: Colors.transparent,
-                            ),
-                            /* ⁡⁢⁣⁣User icon⁡ */
-                            /* Tapping on the user icon will take you to the
-                            profile page */
-                            onPressed: () {
-                              Navigator.push(
-                                /* Get a context where it pushes a new page to the stack */
-                                context,
-                                // Take me to the profile page
-                                MaterialPageRoute(
-                                  builder: (context) => UserProfile(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        /* ⁡⁣⁢⁡⁣⁢⁡⁢⁣⁣Welcome message and user name⁡⁡ display one on top of the other. */
-                        SizedBox(width: 10.0),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Welcome to CutzClub!",
-                              style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: 13,
+            padding: const EdgeInsets.only(top: 20.0),
+            child: SafeArea(
+              child: Row(
+                children: [
+                  // INDEX 1
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Container(
+                      /* Row of elements, where the 1st one is the
+                      avatar and the 2nd one is a column with 2 text
+                      widgets. */
+                      child: Row(
+                        children: [
+                          /* ⁡⁣⁢⁡⁢⁣⁣User account widget.⁡⁡ */
+                          CircleAvatar(
+                            backgroundImage:
+                                AssetImage('lib/Images/IMG_2360.png'),
+                            backgroundColor: Colors.amber,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.person,
+                                color: Colors.transparent,
                               ),
+                              /* ⁡⁢⁣⁣User icon⁡ */
+                              /* Tapping on the user icon will take you to the
+                              profile page */
+                              onPressed: () {
+                                Navigator.push(
+                                  /* Get a context where it pushes a new page to the stack */
+                                  context,
+                                  // Take me to the profile page
+                                  MaterialPageRoute(
+                                    builder: (context) => UserProfile(),
+                                  ),
+                                );
+                              },
                             ),
-                            Text(
-                              "Gustavo Rassi",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // Space in between the elements
-                SizedBox(width: 120),
-
-                // INDEX 2
-                /* Right side panel/drawer⁡: ⁡⁢⁣⁣Notifications⁡ */
-                Container(
-                  child: Builder(
-                    builder: (context) => IconButton(
-                      onPressed: () {
-                        Scaffold.of(context).openEndDrawer();
-                      },
-                      icon: Icon(Icons.notifications,
-                        size: 30,
+                          ),
+                          /* ⁡⁣⁢⁡⁣⁢⁡⁢⁣⁣Welcome message and user name⁡⁡ display one on top of the other. */
+                          SizedBox(width: 10.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Welcome to CutzClub!",
+                                style: TextStyle(
+                                  color: Colors.grey[500],
+                                  fontSize: 13,
+                                ),
+                              ),
+                              Text(
+                                "Gustavo Rassi",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-              ],
+            
+                  // Space in between the elements
+                  SizedBox(width: 120),
+            
+                  // INDEX 2
+                  /* Right side panel/drawer⁡: ⁡⁢⁣⁣Notifications⁡ */
+                  Container(
+                    child: Builder(
+                      builder: (context) => IconButton(
+                        onPressed: () {
+                          Scaffold.of(context).openEndDrawer();
+                        },
+                        icon: Icon(Icons.notifications,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -376,24 +381,27 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                         color: Colors.transparent),
                     height: 190,
-                    child: ListView(
+                    child: StreamBuilder<QuerySnapshot>(stream: barbers,
+                    builder: (BuildContext context,
+                     AsyncSnapshot<QuerySnapshot> snapshot
+                     ){
+                      if(snapshot.hasError){
+                        return Text('Something Went Wrong');
+                      }
+
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      final data = snapshot.requireData;
+                      return ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      children: [
-                        // ⁡⁢⁣⁣List of barbers.⁡
-                        BarberCard(
-                          barber_name: "John Smith",
-                          barber_image: 'lib/Images/JohnSmith.png',
-                        ),
-                        BarberCard(
-                          barber_name: "Gustavo Rassi",
-                          barber_image: 'lib/Images/IMG_2360.png',
-                        ),
-                        BarberCard(
-                          barber_name: "Aleph Gonzalez",
-                          barber_image: 'lib/Images/AlephGonzalez.png',
-                        )
-                      ],
-                    ),
+                      itemCount: data.size,
+                      itemBuilder: (context,index) {
+                        return BarberCard(barber_name: '${data.docs[index]['first_name']} ${data.docs[index]['last_name']}', barber_image: 'lib/Images/${data.docs[index]['image']}');
+                      },);
+                     }
+                     ),
                   ),
                 ),
                 // End of index 2

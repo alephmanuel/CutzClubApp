@@ -3,6 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_demo/Utility/Barbers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_demo/Utility/BarberCard.dart';
 
 /* Booking: Book your appointment by selecting the date and time of the appointment.
             During the process, you have to option to book your appointment by
@@ -16,11 +19,16 @@ class BookingAppointment extends StatefulWidget {
 }
 
 class _BookingAppointmentState extends State<BookingAppointment> {
+  final Stream<QuerySnapshot> barbers = FirebaseFirestore.instance.collection('barber').snapshots();
   DateTime date_selected = DateTime.now();
   CalendarFormat format = CalendarFormat.month;
   String barber_selected = "";
   String hour_selected = "";
   String minutes_selected = "";
+
+  int index_barber_hours = 0;
+
+  
 
   /* Boolean variable to determine if a 'button' container is tapped. */
   bool isEnabled = false;
@@ -187,462 +195,111 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                 thickness: 2.5,
               ),
             ),
-            SizedBox(height: 10),
-            Container(
-              height: 280.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //======================
-                  /* ⁡⁢⁣⁣BARBER: John Smith⁡⁡⁡⁡ */
-                  Container(
-                    decoration: BoxDecoration(color: Colors.black),
-                    height: 80,
-                  ),
-                  //===========
-                  /* DIVIDER */
-                  Divider(color: Colors.white),
-                  /* DIVIDER */
-                  //=========================
-                  /* ⁡⁢⁣⁣BARBER: Gustavo Rassi⁡ */
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    /////////////
-                    /* ⁡⁣⁣Barber tile with his available hours.⁡ */
-                    child: Container(
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isEnabled = !isEnabled;
-                              });
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.all(5),
-                              child: Container(
-                                child: Barber(name: "Gustavo Rassi"),
-                                decoration: (isEnabled
-                                    ? BoxDecoration(color: Colors.amber)
-                                    : BoxDecoration(
-                                        border:
-                                            Border.all(color: Colors.amber))),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: VerticalDivider(color: Colors.white),
-                          ),
-                          ///////////
-                          /* ⁡⁣⁡⁢⁣⁣Row of the available hours.⁡⁡ */
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Container(
-                              child: Row(
-                                children: [
-                                  //////////////////
-                                  /* Hour button. */
-                                  GestureDetector(
-                                    /* 'onTap' will change the color depending on enabled/disabled. */
-                                    onTap: () {
-                                      setState(() {
-                                        isEnabled = !isEnabled;
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.all(5),
-                                      child: Container(
-                                        child: Padding(
-                                          padding: EdgeInsets.all(7),
-                                          child: Text("8:00 AM"),
-                                        ),
-                                        /////////
-                                        /* If the hour is selected, the slot will be highlighted. */
-                                        decoration: (isEnabled
-                                            ? BoxDecoration(color: Colors.amber)
-                                            : BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.amber))),
-                                      ),
-                                    ),
-                                  ),
-                                  //////////////////
-                                  /* Hour button. */
-                                  GestureDetector(
-                                    /* '⁡⁣⁢onTap⁡' will change the color depending on enabled/disabled. */
-                                    onTap: () {
-                                      setState(() {
-                                        isEnabled = !isEnabled;
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.all(3),
-                                      child: Container(
-                                        child: Padding(
-                                          padding: EdgeInsets.all(7),
-                                          child: Text("9:30 AM"),
-                                        ),
-                                        /////////
-                                        /* If the hour is selected, the slot will be highlighted. */
-                                        decoration: (isEnabled
-                                            ? BoxDecoration(color: Colors.amber)
-                                            : BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.amber))),
-                                      ),
-                                    ),
-                                  ),
-                                  //////////////////
-                                  /* Hour button. */
-                                  GestureDetector(
-                                    /* 'onTap' will change the color depending on enabled/disabled. */
-                                    onTap: () {
-                                      setState(() {
-                                        isEnabled = !isEnabled;
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.all(3),
-                                      child: Container(
-                                        child: Padding(
-                                          padding: EdgeInsets.all(7),
-                                          child: Text("10:55 AM"),
-                                        ),
-                                        /////////
-                                        /* If the hour is selected, the slot will be highlighted. */
-                                        decoration: (isEnabled
-                                            ? BoxDecoration(color: Colors.amber)
-                                            : BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.amber))),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          /* Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5),
-                            
-                            child: Container(
-                              height: 60,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 6,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 5),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    child: Center(
-                                      child: ElevatedButton(
-                                        onPressed: () => setState(() {
-                                          hour = index + 8;
-                                          minutes = 0;
-                                          hour_selected =
-                                              hour.toString().padLeft(2, '0');
-                                          minutes_selected = minutes
-                                              .toString()
-                                              .padLeft(2, '0');
-                                        }),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.amber,
-                                        ),
-                                        child: Text(
-                                          "${index + 8}:00 AM",
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: Colors.white,
-                                            //fontStyle: FontStyle.italic,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ) */
-                          /* Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: ListView
-                            (
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                ElevatedButton(
-                                  onPressed:,
-                                  child: Text()
-                                )
-                              ],
-                            ),
-                          ) */
-                        ],
-                      ),
-                      color: Colors.transparent,
-                      height: 70,
-                    ),
-                  ),
-                  //===========
-                  /* DIVIDER */
-                  Divider(color: Colors.white),
-                  /* DIVIDER */
-                  //==========================
-                  /* ⁡⁢⁣⁣BARBER: Aleph Gonzalez⁡ */
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    /////////////
-                    /* Barber tile with his available hours. */
-                    child: Container(
-                      child:
-                          ListView(scrollDirection: Axis.horizontal, children: [
-                        GestureDetector(
+            
+             Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.transparent),
+                    height: 190,
+                    child: StreamBuilder<QuerySnapshot>(stream: barbers,
+                    builder: (BuildContext context,
+                     AsyncSnapshot<QuerySnapshot> snapshot
+                     ){
+                      if(snapshot.hasError){
+                        return Text('Something Went Wrong');
+                      }
+
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      final data = snapshot.requireData;
+                      return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: data.size,
+                      itemBuilder: (context,index) {
+                        return GestureDetector(
                           onTap: () {
-                            setState(() {
-                              isEnabled = !isEnabled;
-                            });
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Container(
-                              child: Barber(name: "Aleph Gonzalez"),
-                              decoration: (isEnabled
-                                  ? BoxDecoration(color: Colors.amber)
-                                  : BoxDecoration(
-                                      border: Border.all(color: Colors.amber))),
-                            ),
-                          ),
-                        ),
-                        ////////////////
-                        /* Vertical divider between the barber and the hour slots. */
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: VerticalDivider(color: Colors.white),
-                        ),
-                        ///////////
-                        /* Row of the available hours. */
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Container(
-                            child: Row(
-                              children: [
-                                //////////////////
-                                /* Hour button. */
-                                GestureDetector(
-                                  /* 'onTap' will change the color depending on enabled/disabled. */
-                                  onTap: () {
-                                    setState(() {
-                                      isEnabled = !isEnabled;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.all(5),
-                                    child: Container(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(7),
-                                        child: Text("8:00 AM"),
-                                      ),
-                                      /////////
-                                      /* If the hour is selected, the slot will be highlighted. */
-                                      decoration: (isEnabled
-                                          ? BoxDecoration(color: Colors.amber)
-                                          : BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.amber))),
-                                    ),
-                                  ),
-                                ),
-                                //////////////////
-                                /* Hour button. */
-                                GestureDetector(
-                                  /* 'onTap' will change the color depending on enabled/disabled. */
-                                  onTap: () {
-                                    setState(() {
-                                      isEnabled = !isEnabled;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.all(3),
-                                    child: Container(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(7),
-                                        child: Text("9:30 AM"),
-                                      ),
-                                      /////////
-                                      /* If the hour is selected, the slot will be highlighted. */
-                                      decoration: (isEnabled
-                                          ? BoxDecoration(color: Colors.amber)
-                                          : BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.amber))),
-                                    ),
-                                  ),
-                                ),
-                                //////////////////
-                                /* Hour button. */
-                                GestureDetector(
-                                  /* 'onTap' will change the color depending on enabled/disabled. */
-                                  onTap: () {
-                                    setState(() {
-                                      isEnabled = !isEnabled;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.all(3),
-                                    child: Container(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(7),
-                                        child: Text("10:55 AM"),
-                                      ),
-                                      /////////
-                                      /* If the hour is selected, the slot will be highlighted. */
-                                      decoration: (isEnabled
-                                          ? BoxDecoration(color: Colors.amber)
-                                          : BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.amber))),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        /* Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5),
+                           setState(() {
+                            isEnabled = !isEnabled;
+                            barber_selected = '${data.docs[index]['first_name']} ${data.docs[index]['last_name']}';
+                            index_barber_hours = index;
                             
-                            child: Container(
-                              height: 60,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 6,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 5),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    child: Center(
-                                      child: ElevatedButton(
-                                        onPressed: () => setState(() {
-                                          hour = index + 8;
-                                          minutes = 0;
-                                          hour_selected =
-                                              hour.toString().padLeft(2, '0');
-                                          minutes_selected = minutes
-                                              .toString()
-                                              .padLeft(2, '0');
-                                        }),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.amber,
-                                        ),
-                                        child: Text(
-                                          "${index + 8}:00 AM",
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: Colors.white,
-                                            //fontStyle: FontStyle.italic,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
+                           });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+
+                              border: Border.all(
+                                color: Colors.black,
+                              )
                             ),
-                          ) */
-                        /* Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: ListView
-                            (
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                ElevatedButton(
-                                  onPressed:,
-                                  child: Text()
-                                )
-                              ],
+                            child: BarberCard(barber_name: '${data.docs[index]['first_name']} ${data.docs[index]['last_name']}', barber_image: 'lib/Images/${data.docs[index]['image']}')));
+                      },);
+                     }
+                     ),
+                  ),
+                ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Divider(
+                color: Colors.white,
+                thickness: 2.5,
+              ),
+            ),
+
+            Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.transparent),
+                    height: 100,
+                    child: StreamBuilder<QuerySnapshot>(stream: barbers,
+                    builder: (BuildContext context,
+                     AsyncSnapshot<QuerySnapshot> snapshot
+                     ){
+                      if(snapshot.hasError){
+                        return Text('Something Went Wrong');
+                      }
+
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      final data = snapshot.requireData;
+                      return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: data.size,
+                      itemBuilder: (context,index) {
+                        final hours_available = data.docs[index]['availability_hours'].length;
+
+                        return Center(
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
+                            decoration: BoxDecoration(
+                        
+                              border: Border.all(
+                                color: Colors.black,
+                              )
                             ),
-                          ) */
-                      ]),
-                      color: Colors.transparent,
-                      height: 70,
-                    ),
+                            child: ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            hour_selected = data.docs[index_barber_hours]['availability_hours'][index];
+                                          });
+                                        },
+                                        child: Text('${data.docs[index_barber_hours]['availability_hours'][index]}'),
+                                      ),),
+                        );
+                      },);
+                     }
+                     ),
                   ),
-                  /* ElevatedButton(
-                    onPressed: () => setState(
-                      () {
-                        barber_selected = "John Smtih";
-                      },
-                    ),
-                    child: Barber(name: "John Smith"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => setState(
-                      () {
-                        barber_selected = "Aleph Gonzalez";
-                      },
-                    ),
-                    child: Barber(name: "Aleph Gonzalez"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade900,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => setState(
-                      () {
-                        barber_selected = "Gustavo Rassi";
-                      },
-                    ),
-                    child: Barber(name: "Gustavo Rassi"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade900,
-                    ),
-                  ), */
-                ],
-              ),
-            ),
-            /* Container(
-              padding: EdgeInsets.only(top: 45.0),
-              child: Text(
-                'Day of the appointment: ${date_selected.day}/${date_selected.month}/${date_selected.year}',
-                style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
                 ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 10),
-              child: Text(
-                'Time Picked for the appointment: $hour_selected:$minutes_selected',
-                style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 10),
-              child: Text(
-                "Barber Selected: $barber_selected",
-                style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-            ), */
+
+            Text(hour_selected),
             Container(
               padding: EdgeInsets.only(top: 28, bottom: 30),
               child: ElevatedButton(
