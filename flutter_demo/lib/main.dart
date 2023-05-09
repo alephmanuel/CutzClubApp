@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
     // fbDB.collection("accounts").get().then((event) =>
     //     {for (var doc in event.docs) print("${doc.id} => ${doc.data()}")});
     return MaterialApp(
+      scaffoldMessengerKey: Utils.messengerKey,
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Barber Shop',
