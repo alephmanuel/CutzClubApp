@@ -33,6 +33,9 @@ class _BookingAppointmentState extends State<BookingAppointment> {
   /* Boolean variable to determine if a 'button' container is tapped. */
   bool isEnabled = false;
 
+  /* ⁡⁢⁣⁣List of barbers⁡ where the user will select one for the appointment. */
+  final barberList = ['Gustavo Rassi', 'Aleph Gonzalez', 'John Smith'];
+
   /* Function to update the day for every time there's an input by the user. */
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
