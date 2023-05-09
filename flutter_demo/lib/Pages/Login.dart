@@ -56,15 +56,17 @@ class _LoginState extends State<Login> {
         child: Column(
           children: [
             //This container is to insert the Logo image at the top of the login page
-            Container(
-              color: Colors.amber,
-              padding: const EdgeInsets.all(0.0),
-              margin:
-                  const EdgeInsets.symmetric(horizontal: 130.0, vertical: 20),
+            SafeArea(
               child: Container(
-                  color: Colors.amber,
-                  padding: const EdgeInsets.all(0),
-                  child: const Image(image: AssetImage('lib/Images/logo.jpg'))),
+                color: Colors.amber,
+                padding: const EdgeInsets.all(0.0),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 130.0, vertical: 20),
+                child: Container(
+                    color: Colors.amber,
+                    padding: const EdgeInsets.all(0),
+                    child: const Image(image: AssetImage('lib/Images/logo.jpg'))),
+              ),
             ),
 
             //This container is to create a toggle button to switch between the log in and the register page

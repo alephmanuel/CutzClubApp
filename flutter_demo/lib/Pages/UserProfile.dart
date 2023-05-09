@@ -13,10 +13,17 @@ class UserProfile extends StatefulWidget {
 
   final User? user = Auth().currentUser;
 
+  @override
+  State<UserProfile> createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
+
   Widget signOutButton() {
     return TextButton(
       onPressed: () {
         FirebaseAuth.instance.signOut();
+        Navigator.pop(context);
       },
       child: Text(
         "Sign Out",
@@ -28,11 +35,6 @@ class UserProfile extends StatefulWidget {
     );
   }
 
-  @override
-  State<UserProfile> createState() => _UserProfileState();
-}
-
-class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,7 +219,7 @@ class _UserProfileState extends State<UserProfile> {
                         child: Text("Edit Profile"),
                       ),
                     ),
-                    widget.signOutButton(),
+                    signOutButton(),
                   ],
                 ),
                 //=================
