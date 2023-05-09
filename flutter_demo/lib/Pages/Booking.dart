@@ -25,6 +25,9 @@ class _BookingAppointmentState extends State<BookingAppointment> {
   /* Boolean variable to determine if a 'button' container is tapped. */
   bool isEnabled = false;
 
+  /* ⁡⁢⁣⁣List of barbers⁡ where the user will select one for the appointment. */
+  final barberList = ['Gustavo Rassi', 'Aleph Gonzalez', 'John Smith'];
+
   /* Function to update the day for every time there's an input by the user. */
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
@@ -196,6 +199,8 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                   //======================
                   /* ⁡⁢⁣⁣BARBER: John Smith⁡⁡⁡⁡ */
                   Container(
+                    /* ⁡⁢⁣⁣List of barbers⁡ to be ⁡⁢⁣⁣selected by⁡ the ⁡⁢⁣⁣user⁡. */
+                    
                     decoration: BoxDecoration(color: Colors.black),
                     height: 80,
                   ),
@@ -252,21 +257,22 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                                       });
                                     },
                                     child: Padding(
-                                      padding: EdgeInsets.all(5),
-                                      child: Container(
-                                        child: Padding(
-                                          padding: EdgeInsets.all(7),
-                                          child: Text("8:00 AM"),
+                                        padding: EdgeInsets.all(5),
+                                        child: Container(
+                                          child: Padding(
+                                            padding: EdgeInsets.all(7),
+                                            child: Text("8:00 AM"),
+                                          ),
+                                          /////////
+                                          /* If the hour is selected, the slot will be highlighted. */
+                                          decoration: (isEnabled
+                                              ? BoxDecoration(
+                                                  color: Colors.amber)
+                                              : BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.amber))),
                                         ),
-                                        /////////
-                                        /* If the hour is selected, the slot will be highlighted. */
-                                        decoration: (isEnabled
-                                            ? BoxDecoration(color: Colors.amber)
-                                            : BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.amber))),
-                                      ),
-                                    ),
+                                      )
                                   ),
                                   //////////////////
                                   /* Hour button. */
@@ -278,11 +284,11 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                                       });
                                     },
                                     child: Padding(
-                                      padding: EdgeInsets.all(3),
+                                      padding: EdgeInsets.all(5),
                                       child: Container(
                                         child: Padding(
                                           padding: EdgeInsets.all(7),
-                                          child: Text("9:30 AM"),
+                                          child: Text("9:00 AM"),
                                         ),
                                         /////////
                                         /* If the hour is selected, the slot will be highlighted. */
