@@ -52,7 +52,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month), label: 'Appointments'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag), label: 'Shop'),
+              icon: Icon(Icons.shopping_bag), label: 'Marketplace'),
         ],
 
         // Calls function that updates the selected index screen

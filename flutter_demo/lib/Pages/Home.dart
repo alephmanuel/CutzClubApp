@@ -28,8 +28,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final Stream<QuerySnapshot> barbers =
+      FirebaseFirestore.instance.collection('barber').snapshots();
 
-  final Stream<QuerySnapshot> barbers = FirebaseFirestore.instance.collection('barber').snapshots();
+  final Stream<QuerySnapshot> services =
+      FirebaseFirestore.instance.collection('service').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,10 +141,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-            
+
                   // Space in between the elements
                   SizedBox(width: 120),
-            
+
                   // INDEX 2
                   /* Right side panel/drawer⁡: ⁡⁢⁣⁣Notifications⁡ */
                   Container(
@@ -150,7 +153,8 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {
                           Scaffold.of(context).openEndDrawer();
                         },
-                        icon: Icon(Icons.notifications,
+                        icon: Icon(
+                          Icons.notifications,
                           size: 30,
                         ),
                       ),
@@ -245,9 +249,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               SizedBox(width: 110),
                               TextButton(
-                                onPressed:() {
-                                  
-                                },
+                                onPressed: () {},
                                 child: Text("View details"),
                               )
                             ],
@@ -294,7 +296,8 @@ class _HomePageState extends State<HomePage> {
                 /* ================================================= */
                 // Begin of index 2: ⁡⁢⁣⁣TRENDING HAIRSTYLES⁡⁡
                 Padding(
-                  padding: EdgeInsets.only(left: 20, bottom: 10.0, top: 40.0, right: 10),
+                  padding: EdgeInsets.only(
+                      left: 20, bottom: 10.0, top: 40.0, right: 10),
                   child: Row(
                     children: [
                       Text(
@@ -323,34 +326,42 @@ class _HomePageState extends State<HomePage> {
                     /* ⁡⁢⁣⁣ServiceTile()⁡ is a reusable function that has the structure of the widget
                     that displays the hairstyles with their prices and names. This implementation
                     helps the developer understand the code, making it easier to read. */
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        ServiceTile(
-                          haircut_image: 'lib/Images/6-mens-taper-cut.png',
-                          haircut_name: "Crew Cut",
-                          price: 23,
-                          haircut_description: "Hair is slightly longer on top and shorter on the sides.",
-                        ),
-                        ServiceTile(
-                            haircut_image: 'lib/Images/Undercut.png',
-                            haircut_name: "Undercut",
-                            price: 25,
-                            haircut_description: "Hair on the sides and back is trimmed very short. Hair on top longer and styled.",
-                        ),
-                        ServiceTile(
-                            haircut_image: 'lib/Images/FrenchCrop.png',
-                            haircut_name: "French Crop",
-                            price: 20,
-                            haircut_description: "Modern version of the crew cut. Hair on top is cut in a slightly longer and textured style.",
-                        ),
-                        ServiceTile(
-                            haircut_image: 'lib/Images/Pompadour.png',
-                            haircut_name: "Pompadour Cut",
-                            price: 25,
-                            haircut_description: "Retro hairstyle. Top hair swept upwards and back. Sides and back trimmed shorter.",
-                        ),
-                      ],
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: Container(
+                        decoration: BoxDecoration(color: Colors.transparent),
+                        height: 190,
+                        child: StreamBuilder<QuerySnapshot>(
+                            stream: services,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('Something Went Wrong');
+                              }
+
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+
+                              final data = snapshot.requireData;
+                              return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: data.size,
+                                itemBuilder: (context, index) {
+                                  return ServiceTile(
+                                      haircut_image:
+                                          'lib/Images/${data.docs[index]['image']}',
+                                      haircut_name: data.docs[index]
+                                          ['service_name'],
+                                      price: data.docs[index]['price'],
+                                      haircut_description: data.docs[index]
+                                          ['description']);
+                                },
+                              );
+                            }),
+                      ),
                     ),
                   ),
                 ),
@@ -378,30 +389,34 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: EdgeInsets.only(bottom: 70),
                   child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.transparent),
+                    decoration: BoxDecoration(color: Colors.transparent),
                     height: 190,
-                    child: StreamBuilder<QuerySnapshot>(stream: barbers,
-                    builder: (BuildContext context,
-                     AsyncSnapshot<QuerySnapshot> snapshot
-                     ){
-                      if(snapshot.hasError){
-                        return Text('Something Went Wrong');
-                      }
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: barbers,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Something Went Wrong');
+                          }
 
-                      if(snapshot.connectionState == ConnectionState.waiting){
-                        return Center(child: CircularProgressIndicator());
-                      }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          }
 
-                      final data = snapshot.requireData;
-                      return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: data.size,
-                      itemBuilder: (context,index) {
-                        return BarberCard(barber_name: '${data.docs[index]['first_name']} ${data.docs[index]['last_name']}', barber_image: 'lib/Images/${data.docs[index]['image']}');
-                      },);
-                     }
-                     ),
+                          final data = snapshot.requireData;
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data.size,
+                            itemBuilder: (context, index) {
+                              return BarberCard(
+                                  barber_name:
+                                      '${data.docs[index]['first_name']} ${data.docs[index]['last_name']}',
+                                  barber_image:
+                                      'lib/Images/${data.docs[index]['image']}');
+                            },
+                          );
+                        }),
                   ),
                 ),
                 // End of index 2
