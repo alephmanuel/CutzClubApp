@@ -31,39 +31,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name = "";
-
-  checkEmail() async {
-    // Get the currently authenticated user from Firebase Authentication
-    final User? user = FirebaseAuth.instance.currentUser;
-
-    // Get the user's email address from their Firebase Authentication profile
-    final String? email = user?.email;
-
-    // Query Firestore for a document with the same email address
-    final CollectionReference usersRef =
-        FirebaseFirestore.instance.collection('user');
-    final QuerySnapshot querySnapshot =
-        await usersRef.where('email', isEqualTo: email).get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      // A matching document was found
-      final DocumentSnapshot userDoc = querySnapshot.docs.first;
-
-      // Extract field values and store them in variables
-      final String? first_name = userDoc.get('first_name');
-      final String? last_name = userDoc.get('last_name');
-
-      name = '$first_name  $last_name';
-
-      // Do something with the variables...
-      print(name);
-    } else {
-      // No matching document was found
-      print('No user found with email: $email');
-    }
-  }
   //Get current user information :3
+  final User? user = FirebaseAuth.instance.currentUser;
+  var name = '';
 
   //Access all barbers
   final Stream<QuerySnapshot> barbers =
@@ -76,6 +46,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     checkEmail();
+    String greeting = '';
+    final DateTime now = DateTime.now();
+
+    if (now.hour < 12) {
+      greeting = 'Good Morning';
+    } else if (now.hour < 18) {
+      greeting = 'Good Afternoon';
+    } else {
+      greeting = 'Good Evening';
+    }
+
     return Scaffold(
       backgroundColor: Colors.grey[900],
 
@@ -137,13 +118,11 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           /* ⁡⁣⁢⁡⁢⁣⁣User account widget.⁡⁡ */
                           CircleAvatar(
-                            backgroundImage:
-                                AssetImage('lib/Images/IMG_2360.png'),
-                            backgroundColor: Colors.amber,
+                            backgroundColor: Colors.brown,
                             child: IconButton(
                               icon: Icon(
                                 Icons.person,
-                                color: Colors.transparent,
+                                color: Colors.amber,
                               ),
                               /* ⁡⁢⁣⁣User icon⁡ */
                               /* Tapping on the user icon will take you to the
@@ -173,8 +152,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Text(
-                                name,
-                                style: TextStyle(fontSize: 16),
+                                '${user?.email}',
+                                style: TextStyle(fontSize: 14),
                               ),
                             ],
                           ),
@@ -211,7 +190,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(bottom: 20, left: 20, top: 20),
             child: Container(
               child: Text(
-                "Book your next appointment.💈",
+                '$greeting $name!',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -468,5 +447,32 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  checkEmail() async {
+    // Get the currently authenticated user from Firebase Authentication
+
+    // Get the user's email address from their Firebase Authentication profile
+    final String? email = user?.email;
+
+    // Query Firestore for a document with the same email address
+    final CollectionReference usersRef =
+        FirebaseFirestore.instance.collection('user');
+    final QuerySnapshot querySnapshot =
+        await usersRef.where('email', isEqualTo: email).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // A matching document was found
+      final DocumentSnapshot userDoc = querySnapshot.docs.first;
+
+      // Extract field values and store them in variables
+      final String? first_name = userDoc.get('first_name');
+      name = first_name!;
+      // Do something with the variables...
+      print('$first_name');
+    } else {
+      // No matching document was found
+      print('No user found with email: $email');
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_demo/NavigationView.dart';
 import 'package:flutter_demo/Pages/Home.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_demo/Utility/Barbers.dart';
@@ -42,12 +43,6 @@ class _BookingAppointmentState extends State<BookingAppointment> {
 
   int index_barber_hours = 0;
 
-  /* Boolean variable to determine if a 'button' container is tapped. */
-  bool isEnabled = false;
-
-  /* ⁡⁢⁣⁣List of barbers⁡ where the user will select one for the appointment. */
-  final barberList = ['Gustavo Rassi', 'Aleph Gonzalez', 'John Smith'];
-
   /* Function to update the day for every time there's an input by the user. */
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
@@ -57,6 +52,17 @@ class _BookingAppointmentState extends State<BookingAppointment> {
 
   @override
   Widget build(BuildContext context) {
+    int barberslength = 0;
+    int hourlength = 0;
+    int servicelength = 0;
+    getSize().then((value) => barberslength = value);
+    getSize().then((value) => hourlength = value);
+    getSize().then((value) => servicelength = value);
+    final toggleBarber = List.filled(barberslength, false);
+    final toggleHour = List.filled(hourlength, false);
+    final toggleService = List.filled(servicelength, false);
+    bool isEnabled = false;
+
     int hour = date_selected.hour;
     int minutes = date_selected.minute;
     return Scaffold(
@@ -274,7 +280,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                           return GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isEnabled = !isEnabled;
+                                  toggleBarber[index] = true;
                                   barber_selected =
                                       '${data.docs[index]['first_name']} ${data.docs[index]['last_name']}';
                                   index_barber_hours = index;
@@ -572,8 +578,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                           .catchError((error) =>
                               print('Failed to add appointment: $error'));
 
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                      Navigator.popUntil(context, (route) => route.isFirst);
                     },
                     child: Text(
                       'Confirm',
@@ -581,5 +586,9 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                     ))
               ],
             ));
+  }
+
+  Future<int> getSize() async {
+    return Future.delayed(const Duration(seconds: 2), () => barbers.length);
   }
 }
