@@ -34,6 +34,8 @@ class _BookingAppointmentState extends State<BookingAppointment> {
   CollectionReference appointment =
       FirebaseFirestore.instance.collection('appointment');
 
+  final User? user = FirebaseAuth.instance.currentUser;
+
   DateTime date_selected = DateTime.now();
   CalendarFormat format = CalendarFormat.month;
   var barber_selected = "";
@@ -52,15 +54,6 @@ class _BookingAppointmentState extends State<BookingAppointment> {
 
   @override
   Widget build(BuildContext context) {
-    int barberslength = 0;
-    int hourlength = 0;
-    int servicelength = 0;
-    getSize().then((value) => barberslength = value);
-    getSize().then((value) => hourlength = value);
-    getSize().then((value) => servicelength = value);
-    final toggleBarber = List.filled(barberslength, false);
-    final toggleHour = List.filled(hourlength, false);
-    final toggleService = List.filled(servicelength, false);
     bool isEnabled = false;
 
     int hour = date_selected.hour;
@@ -280,7 +273,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                           return GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  toggleBarber[index] = true;
+                                  isEnabled = !isEnabled;
                                   barber_selected =
                                       '${data.docs[index]['first_name']} ${data.docs[index]['last_name']}';
                                   index_barber_hours = index;
@@ -310,7 +303,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
               ),
             ),
 
-            //Section to pick the desired hour for the appointment
+            // Section to pick the desired hour for the appointment
             Padding(
               padding: EdgeInsets.all(5),
               child: Text(
@@ -399,7 +392,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
               padding: EdgeInsets.all(5),
               child: Container(
                 decoration: BoxDecoration(color: Colors.transparent),
-                height: 200,
+                height: 210,
                 child: StreamBuilder<QuerySnapshot>(
                     stream: services,
                     builder: (BuildContext context,
@@ -586,9 +579,5 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                     ))
               ],
             ));
-  }
-
-  Future<int> getSize() async {
-    return Future.delayed(const Duration(seconds: 2), () => barbers.length);
   }
 }

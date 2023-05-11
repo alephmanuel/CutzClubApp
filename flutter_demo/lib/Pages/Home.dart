@@ -17,6 +17,7 @@ import 'package:flutter_demo/Pages/AuthProcess/getCurrentUser.dart';
 import 'package:flutter_demo/Utility/Barbers.dart';
 import 'package:flutter_demo/Utility/ServiceTile.dart';
 import 'package:flutter_demo/auth.dart';
+import 'package:flutter_demo/Utility/UpcomingAppointment.dart';
 
 /* Package dependency */
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -34,6 +35,7 @@ class _HomePageState extends State<HomePage> {
   //Get current user information :3
   final User? user = FirebaseAuth.instance.currentUser;
   var name = '';
+  var email = '';
 
   //Access all barbers
   final Stream<QuerySnapshot> barbers =
@@ -43,9 +45,15 @@ class _HomePageState extends State<HomePage> {
   final Stream<QuerySnapshot> services =
       FirebaseFirestore.instance.collection('service').snapshots();
 
+  //Access all services
+  final Stream<QuerySnapshot> appointment =
+      FirebaseFirestore.instance.collection('appointment').snapshots();
+
+
   @override
   Widget build(BuildContext context) {
     checkEmail();
+
     String greeting = '';
     final DateTime now = DateTime.now();
 
@@ -163,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   // Space in between the elements
-                  SizedBox(width: 120),
+                  SizedBox(width: 90),
 
                   // INDEX 2
                   /* Right side panel/drawer⁡: ⁡⁢⁣⁣Notifications⁡ */
@@ -237,79 +245,36 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.black),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 10, top: 10),
 
-                          /* User icon and name inside with ⁡⁢⁣⁣upcoming appointment information⁡. */
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                child: Icon(Icons.person),
-                                backgroundColor: Colors.amber,
-                              ),
-                              SizedBox(width: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("John Smith"),
-                                  Text(
-                                    "Barber",
-                                    style: TextStyle(
-                                        color: Colors.grey[500], fontSize: 13),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 110),
-                              TextButton(
-                                onPressed: () {},
-                                child: Text("View details"),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, top: 15),
-                          child: Container(
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 15),
-                                  child: Icon(Icons.calendar_today),
-                                ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 15),
-                                    child: Text("MM/DD")),
-                                SizedBox(width: 50),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 15),
-                                  child: Icon(Icons.access_time),
-                                ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 15),
-                                    child: Text("HH/MM")),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey[800]),
-                            height: 50,
-                          ),
-                        ),
-                      ],
-                    ),
-                    height: 150,
-                  ),
+                /* Container for the ⁡⁢⁣⁣active appointment⁡. */
+                Padding(
+                      padding: EdgeInsets.only(bottom: 2),
+                      child: Container(
+                        height: 180,
+                        child: StreamBuilder<QuerySnapshot>(
+                            stream: appointment,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('Something Went Wrong');
+                              }
+
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+
+                              final data = snapshot.requireData;
+                              return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: data.size,
+                                itemBuilder: (context, index) {
+                                  return AppointmentCard(barber_name: data.docs[index]['barber'], date: '5:43', hour: data.docs[index]['hour']);
+                                },
+                              );
+                            }),
+                      ),
                 ),
                 /* ⁡⁢⁣⁣Upcoming Appointment Information widget ends here.⁡ */
                 // End of index 1
@@ -442,11 +407,8 @@ class _HomePageState extends State<HomePage> {
                 // End of index 2
                 /* ========================================== */
               ],
-            ),
-          ),
-        ],
-      ),
-    );
+        ),
+          )]));
   }
 
   checkEmail() async {
@@ -458,6 +420,10 @@ class _HomePageState extends State<HomePage> {
     // Query Firestore for a document with the same email address
     final CollectionReference usersRef =
         FirebaseFirestore.instance.collection('user');
+
+    final CollectionReference userAppointment = 
+        FirebaseFirestore.instance.collection('appointment');
+
     final QuerySnapshot querySnapshot =
         await usersRef.where('email', isEqualTo: email).get();
 
@@ -475,4 +441,5 @@ class _HomePageState extends State<HomePage> {
       print('No user found with email: $email');
     }
   }
+
 }
