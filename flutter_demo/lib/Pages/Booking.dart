@@ -274,7 +274,8 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                       final data = snapshot.requireData;
                       return ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: data.size,
+                      itemCount: data.docs[index_barber_hours]
+                            ['availability_hours'].length,
                       itemBuilder: (context,index) {
                         final hours_available = data.docs[index]['availability_hours'].length;
 
