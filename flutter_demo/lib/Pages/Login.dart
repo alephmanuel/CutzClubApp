@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/NavigationView.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_demo/main.dart';
 import '../auth.dart';
@@ -14,11 +16,16 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   final formKey = GlobalKey<FormState>();
+  CollectionReference user = FirebaseFirestore.instance.collection('user');
   /* ⁡⁢⁣⁣Variables⁡ */
   String? errorMessage = '';
   bool isLogin = true;
+
+  var first_name;
+  var last_name;
+  var email;
+  var phone;
 
   /* These ⁡⁢⁣⁣variables⁡ will be used ⁡⁢⁣⁣for the user⁡ to type their ⁡⁢⁣⁣information⁡
   based on the requirements (⁡⁢⁣⁣email & password⁡) */
@@ -65,7 +72,8 @@ class _LoginState extends State<Login> {
                 child: Container(
                     color: Colors.amber,
                     padding: const EdgeInsets.all(0),
-                    child: const Image(image: AssetImage('lib/Images/logo.jpg'))),
+                    child:
+                        const Image(image: AssetImage('lib/Images/logo.jpg'))),
               ),
             ),
 
@@ -131,7 +139,7 @@ class _LoginState extends State<Login> {
   /* ⁡⁢⁣⁣Sing in user with exception for safety.⁡ */
   Future logIn() async {
     final isValid = formKey.currentState!.validate();
-    if(!isValid) return;
+    if (!isValid) return;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -154,7 +162,7 @@ class _LoginState extends State<Login> {
   /* ⁡⁢⁣⁣Create user⁡ with exception for safety. */
   Future<void> register() async {
     final isValid = formKey.currentState!.validate();
-    if(!isValid) return;
+    if (!isValid) return;
 
     showDialog(
       context: context,
@@ -164,7 +172,8 @@ class _LoginState extends State<Login> {
 
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: r_emailController.text.trim(), password: r_passwordController.text.trim());
+          email: r_emailController.text.trim(),
+          password: r_passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       print(e);
 
@@ -186,10 +195,10 @@ class _LoginState extends State<Login> {
             child: TextFormField(
               controller: l_emailController,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (email) => 
-                          email != null && !EmailValidator.validate(email)
-                            ? 'Enter a Valid Email'
-                            : null,
+              validator: (email) =>
+                  email != null && !EmailValidator.validate(email)
+                      ? 'Enter a Valid Email'
+                      : null,
               decoration: InputDecoration(
                 hintText: 'Email',
                 hintStyle: TextStyle(
@@ -212,14 +221,14 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-    
+
           /* ⁡⁢⁣⁣PASSWORD⁡ textfield. */
           Container(
             padding: const EdgeInsets.all(10),
             child: TextFormField(
               controller: l_passwordController,
               obscureText: true,
-              // validator: (value) => 
+              // validator: (value) =>
               //           value != null && value.isEmpty
               //             ? 'Cannot be Empty'
               //             : null,
@@ -245,7 +254,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-    
+
           //button to submit the information for the log in
           ElevatedButton.icon(
             onPressed: () {
@@ -281,10 +290,12 @@ class _LoginState extends State<Login> {
                 child: TextFormField(
                   controller: r_fnameController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => 
-                        value != null && value.length < 1
-                          ? 'Cannot be Empty'
-                          : null,
+                  validator: (value) => value != null && value.length < 1
+                      ? 'Cannot be Empty'
+                      : null,
+                  onChanged: (value) {
+                    first_name = value;
+                  },
                   decoration: InputDecoration(
                     hintText: 'First Name',
                     hintStyle: TextStyle(
@@ -312,10 +323,12 @@ class _LoginState extends State<Login> {
                 child: TextFormField(
                   controller: r_lnameController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => 
-                        value != null && value.length < 1
-                          ? 'Cannot be Empty'
-                          : null,
+                  validator: (value) => value != null && value.length < 1
+                      ? 'Cannot be Empty'
+                      : null,
+                  onChanged: (value) {
+                    last_name = value;
+                  },
                   decoration: InputDecoration(
                     hintText: 'Last Name',
                     hintStyle: TextStyle(
@@ -345,10 +358,13 @@ class _LoginState extends State<Login> {
             child: TextFormField(
               controller: r_emailController,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (email) => 
-                        email != null && !EmailValidator.validate(email)
-                          ? 'Enter a Valid Email'
-                          : null,
+              validator: (email) =>
+                  email != null && !EmailValidator.validate(email)
+                      ? 'Enter a Valid Email'
+                      : null,
+              onChanged: (value) {
+                email = value;
+              },
               decoration: InputDecoration(
                 hintText: 'Email',
                 hintStyle: TextStyle(
@@ -371,7 +387,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-    
+
           // container for the phone number on the registration page
           Container(
             padding: EdgeInsets.all(10),
@@ -379,10 +395,12 @@ class _LoginState extends State<Login> {
               controller: r_phoneController,
               keyboardType: TextInputType.phone,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => 
-                        value != null && value.length < 10
-                          ? 'Enter a valid Phone Number'
-                          : null,
+              validator: (value) => value != null && value.length < 10
+                  ? 'Enter a valid Phone Number'
+                  : null,
+              onChanged: (value) {
+                phone = value;
+              },
               scrollPadding: EdgeInsets.all(0),
               //obscureText: true,
               decoration: InputDecoration(
@@ -407,7 +425,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-    
+
           // Container: ⁡⁢⁣⁣Password on the registration page⁡
           Container(
             padding: EdgeInsets.all(10),
@@ -415,10 +433,9 @@ class _LoginState extends State<Login> {
               controller: r_passwordController,
               obscureText: true,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => 
-                        value != null && value.length < 10
-                          ? 'Enter a min of 10 characters'
-                          : null,
+              validator: (value) => value != null && value.length < 10
+                  ? 'Enter a min of 10 characters'
+                  : null,
               decoration: InputDecoration(
                 hintText: 'Password',
                 hintStyle: TextStyle(
@@ -441,7 +458,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-    
+
           // Container: ⁡⁢⁣⁣Confirm password on the registration page⁡
           Container(
             padding: EdgeInsets.all(10),
@@ -449,15 +466,14 @@ class _LoginState extends State<Login> {
               controller: r_confirmpasswordController,
               obscureText: true,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-    validator: (value) {
-      if (value == null) {
-      return null;
-      }
-      return value == r_passwordController.text
-      ? null
-      : 'Confirm Password does not match Password';
-    },
-    
+              validator: (value) {
+                if (value == null) {
+                  return null;
+                }
+                return value == r_passwordController.text
+                    ? null
+                    : 'Confirm Password does not match Password';
+              },
               decoration: InputDecoration(
                 hintText: 'Confirm Password',
                 hintStyle: TextStyle(
@@ -480,12 +496,21 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-    
+
           // button to submit the information on the textfields to complete the registration
           ElevatedButton.icon(
             onPressed: () {
               // Perform registration here
               register();
+              user
+                  .add({
+                    'email': email,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'phone': phone
+                  })
+                  .then((value) => print('User Added'))
+                  .catchError((error) => print('Failed to add user: $error'));
             },
             icon: const Icon(Icons.app_registration),
             label: const Text('Register'),
@@ -498,8 +523,7 @@ class _LoginState extends State<Login> {
   }
 }
 
-class Utils{
-
+class Utils {
   static final messengerKey = GlobalKey<ScaffoldMessengerState>();
 
   static showSnackBar(String? text) {
@@ -507,8 +531,8 @@ class Utils{
 
     final snackBar = SnackBar(content: Text(text), backgroundColor: Colors.red);
 
-      messengerKey.currentState!
-        ..removeCurrentSnackBar()
-        ..showSnackBar(snackBar);
+    messengerKey.currentState!
+      ..removeCurrentSnackBar()
+      ..showSnackBar(snackBar);
   }
 }

@@ -1,5 +1,6 @@
 /* Database imports: Firebase */
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 /* Essential imports: Material app and framework */
 import 'package:flutter/material.dart';
@@ -10,10 +11,12 @@ import 'package:flutter_demo/Pages/Appointment.dart';
 import 'package:flutter_demo/Pages/UserProfile.dart';
 import 'package:flutter_demo/Pages/Booking.dart';
 import 'package:flutter_demo/Utility/BarberCard.dart';
+import 'package:flutter_demo/Pages/AuthProcess/getCurrentUser.dart';
 
 /* Utility file */
 import 'package:flutter_demo/Utility/Barbers.dart';
 import 'package:flutter_demo/Utility/ServiceTile.dart';
+import 'package:flutter_demo/auth.dart';
 
 /* Package dependency */
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -28,13 +31,51 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String name = "";
+
+  checkEmail() async {
+    // Get the currently authenticated user from Firebase Authentication
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    // Get the user's email address from their Firebase Authentication profile
+    final String? email = user?.email;
+
+    // Query Firestore for a document with the same email address
+    final CollectionReference usersRef =
+        FirebaseFirestore.instance.collection('user');
+    final QuerySnapshot querySnapshot =
+        await usersRef.where('email', isEqualTo: email).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // A matching document was found
+      final DocumentSnapshot userDoc = querySnapshot.docs.first;
+
+      // Extract field values and store them in variables
+      final String? first_name = userDoc.get('first_name');
+      final String? last_name = userDoc.get('last_name');
+
+      name = '$first_name  $last_name';
+
+      // Do something with the variables...
+      print(name);
+    } else {
+      // No matching document was found
+      print('No user found with email: $email');
+    }
+  }
+  //Get current user information :3
+
+  //Access all barbers
   final Stream<QuerySnapshot> barbers =
       FirebaseFirestore.instance.collection('barber').snapshots();
 
+  //Access all services
   final Stream<QuerySnapshot> services =
       FirebaseFirestore.instance.collection('service').snapshots();
+
   @override
   Widget build(BuildContext context) {
+    checkEmail();
     return Scaffold(
       backgroundColor: Colors.grey[900],
 
@@ -132,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Text(
-                                "Gustavo Rassi",
+                                name,
                                 style: TextStyle(fontSize: 16),
                               ),
                             ],
