@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
 
   //Access all services
   final Stream<QuerySnapshot> appointment =
-      FirebaseFirestore.instance.collection('appointment').snapshots();
+      FirebaseFirestore.instance.collection('appointment').where("email", isEqualTo: FirebaseAuth.instance.currentUser!.email).snapshots();
 
 
   @override
@@ -270,7 +270,10 @@ class _HomePageState extends State<HomePage> {
                                 scrollDirection: Axis.vertical,
                                 itemCount: data.size,
                                 itemBuilder: (context, index) {
-                                  return AppointmentCard(barber_name: data.docs[index]['barber'], date: '5:43', hour: data.docs[index]['hour']);
+                                  print(data.docs[index]['date']);
+                                  DateTime date = DateTime.fromMillisecondsSinceEpoch(
+                                  data.docs[index]['date'].seconds * 1000);
+                                  return AppointmentCard(barber_name: data.docs[index]['barber'], date: '${date.month}/${date.day}/${date.year}', hour: data.docs[index]['hour']);
                                 },
                               );
                             }),

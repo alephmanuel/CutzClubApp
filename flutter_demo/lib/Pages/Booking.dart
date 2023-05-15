@@ -564,6 +564,7 @@ class _BookingAppointmentState extends State<BookingAppointment> {
                           .add({
                             'barber': barber_selected,
                             'date': date_selected,
+                            'email': user!.email,
                             'hour': hour_selected,
                             'service': service_selected
                           })
